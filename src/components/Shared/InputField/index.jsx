@@ -6,6 +6,8 @@ const InputField = ({
     placeholder,
     value,
     onChange,
+    min,
+    max,
 }) => {
     return (
         <React.Fragment>
@@ -14,8 +16,10 @@ const InputField = ({
                 type={type}
                 placeholder={placeholder}
                 value={value}
+                min={min}
+                max={max}
                 onChange={onChange}
-                className='flex outline outline-1 outline-outlineColor rounded-md h-12 w-80 pl-5 focus:outline-primaryColor hover:appearance-none'
+                className='form flex outline outline-1 outline-outlineColor rounded-md h-12 w-80 pl-5 focus:outline-primaryColor'
             />
         </React.Fragment>
     );
