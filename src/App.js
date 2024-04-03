@@ -1,10 +1,11 @@
-import './App.css';
-
+import React from 'react';
+import HomePage from "./pages/Home";
+import './index.js';
 function App() {
   return (
-    <div className="App">
-      <h1>SignUp Form</h1>
-    </div>
+    <React.Fragment>
+      <HomePage />
+    </React.Fragment>
   );
 }
 
