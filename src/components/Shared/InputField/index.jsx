@@ -8,6 +8,7 @@ const InputField = ({
     onChange,
     min,
     max,
+    error
 }) => {
     return (
         <React.Fragment>
@@ -19,8 +20,9 @@ const InputField = ({
                 min={min}
                 max={max}
                 onChange={onChange}
-                className='form flex outline outline-1 outline-outlineColor rounded-md h-12 w-80 pl-5 focus:outline-primaryColor'
+                className={`outline outline-1 outline-outlineColor rounded-md h-12 w-72 pl-5 mb-5 ${error ? 'outline-red-600' : ''} `}
             />
+            {error && <span className='text-red-600'>{error}</span>}
         </React.Fragment>
     );
 }
