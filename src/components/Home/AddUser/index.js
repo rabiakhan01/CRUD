@@ -7,9 +7,28 @@ const AddUser = () => {
         age: '',
         address: ''
     });
-    const [userData, setUserData] = useState([])
+    const [userData, setUserData] = useState([
+        {
+            id: 0,
+            username: 'Rabia',
+            email: 'Khan@gmail.com',
+            age: '22',
+            address: '21 lahore',
+            gender: 'male',
+            languages: [],
+        }, {
+            id: 1,
+            username: 'aqsa',
+            email: 'Khan@gmail.com',
+            age: '18',
+            address: 'thokar',
+            gender: 'male',
+            languages: [],
+        },
+
+    ])
     const [formData, setFormData] = useState({
-        id: '',
+        id: 0,
         username: '',
         email: '',
         age: '',
@@ -17,8 +36,10 @@ const AddUser = () => {
         gender: 'male',
         languages: [],
     })
+
     const handelChange = (event) => {
         const { name, value, checked } = event.target;
+
         if (name === "languages") {
             if (checked) {
                 setFormData(prevState => ({
@@ -37,61 +58,57 @@ const AddUser = () => {
             setFormData({
                 ...formData,
                 [name]: value,
-                id: Math.random() * 9
             });
+            setError(
+                {
+                    ...error,
+                    [name]: false,
+                }
+            )
         }
-        removeError();
     }
 
-    const removeError = () => {
-        if (formData.username !== "") {
-            setError((prevError) => ({ ...prevError, username: "" }))
-        }
-        if (formData.email !== "") {
-            setError((prevError) => ({ ...prevError, email: "" }))
-        }
-        if (formData.age !== "") {
-            setError((prevError) => ({ ...prevError, age: "" }))
-        }
-        if (formData.address !== "") {
-            setError((prevError) => ({ ...prevError, address: "" }))
-        }
-    }
     const handelSubmit = (event) => {
+
         event.preventDefault();
 
-        if (!formData.username) {
+        if (formData.username === '') {
             setError((prevError) => ({ ...prevError, username: "username required" }))
         }
-        if (!formData.email) {
+        if (formData.email === '') {
             setError((prevError) => ({ ...prevError, email: "email required" }))
         }
-        if (!formData.age) {
+        if (formData.age === '') {
             setError((prevError) => ({ ...prevError, age: "age required" }))
         }
-        if (!formData.address) {
+        if (formData.address === '') {
             setError((prevError) => ({ ...prevError, address: "address required" }))
         }
-
-        if (Object.keys(error).length === 0) {
-            alert("Form submited successfully")
+        if (formData.username !== '' && formData.email !== '' && formData.age !== '' && formData.address !== '') {
             setUserData((prevState) => ([...prevState, formData]));
+
             setFormData({
                 username: "",
                 email: "",
                 age: "",
                 address: "",
+                gender: "male",
                 languages: []
             });
         }
 
     }
 
+    const deleteUser = (index) => {
+        userData.splice(index, 1);
+        setUserData([...userData])
+    }
+
     return (
-        <React.Fragment>
-            <div className='flex flex-col justify-center items-center py-5 w-[30rem] outline outline-1 outline-outlineColor mt-5'>
-                <h1 className='text-primaryColor text-3xl font-bold pb-8'>Add User</h1>
-                <form className='form flex flex-col gap-3' onSubmit={handelSubmit}>
+        <div className='w-full flex flex-col justify-center items-center'>
+            <div className='w-full lg:w-1/2'>
+                <form className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center py-5' onSubmit={handelSubmit}>
+                    <h1 className='text-primaryColor text-3xl font-bold pb-8'>Add User</h1>
                     <div className='flex flex-col items-center'>
                         <InputField
                             name="username"
@@ -212,30 +229,36 @@ const AddUser = () => {
                 </form>
             </div>
             <div>
-                <div>
-                    <h1>User Detail</h1>
+                <div className='mt-20 text-center'>
+                    <h1 className='text-primaryColor text-3xl font-bold pb-8'>User Detail</h1>
                 </div>
-                <div>
-                    <table className="table-auto">
-                        <thead>
-                            <tr>
-                                <th>username</th>
-                                <th>email</th>
-                                <th>age</th>
-                                <th>address</th>
-                                <th>gender</th>
+                <div className='flex flex-col w-4/5'>
+                    <table className="table-auto border border-primaryColor">
+                        <thead className='bg-primaryColor'>
+                            <tr className='text-textColor text-medium text-base'>
+                                <th className='px-6 py-2'>Sr#</th>
+                                <th className='px-6'>Username</th>
+                                <th className='px-6'>Email</th>
+                                <th className='px-6'>Age</th>
+                                <th className='px-6'>Address</th>
+                                <th className='px-6'>Gender</th>
+                                <th className='px-6'>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                userData.map((user) => {
+                                userData.map((user, index) => {
                                     return (
-                                        <tr>
-                                            <td>{user.username}</td>
-                                            <td>{user.email}</td>
-                                            <td>{user.age}</td>
-                                            <td>{user.address}</td>
-                                            <td>{user.gender}</td>
+                                        <tr key={index} className='py-2'>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.id = index + 1}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.username}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.email}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.age}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.address}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
+                                            <td className='flex gap-2 border border-primaryColor px-6 text-textColor'>
+                                                <button className='bg-dangerColor px-1 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>
+                                            </td>
                                         </tr>
                                     )
                                 })
@@ -244,7 +267,7 @@ const AddUser = () => {
                     </table>
                 </div>
             </div>
-        </React.Fragment>
+        </div >
     );
 }
 

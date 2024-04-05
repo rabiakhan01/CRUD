@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-import { outlineColor, primaryColor } from './src/utils/styles/color';
+import { outlineColor, primaryColor, textColor, dangerColor } from './src/utils/styles/color';
 module.exports = {
   content: ["./App.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -7,6 +7,8 @@ module.exports = {
       colors: {
         'outlineColor': outlineColor,
         'primaryColor': primaryColor,
+        'textColor': textColor,
+        'dangerColor': dangerColor
       }
     },
   },
