@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { InputField } from '../../Shared';
 const AddUser = () => {
 
@@ -10,7 +10,7 @@ const AddUser = () => {
     });
     const [userData, setUserData] = useState([
         {
-            id: 1,
+            id: 0,
             username: 'Rabia',
             email: 'Khan@gmail.com',
             age: '22',
@@ -18,7 +18,7 @@ const AddUser = () => {
             gender: 'female',
             languages: [],
         }, {
-            id: 2,
+            id: 1,
             username: 'aqsa',
             email: 'Khan@gmail.com',
             age: '18',
@@ -41,9 +41,12 @@ const AddUser = () => {
     const [buttonChanged, setButtonChanged] = useState(false);
 
     const handelChange = (event) => {
+
+
         const { name, value, checked } = event.target;
 
         if (name === "languages") {
+
             if (checked) {
                 setFormData(prevState => ({
                     ...prevState,
@@ -69,7 +72,6 @@ const AddUser = () => {
                 }
             )
         }
-
     }
 
     const handelSubmit = (event) => {
@@ -89,7 +91,6 @@ const AddUser = () => {
             setError((prevError) => ({ ...prevError, address: "address required" }))
         }
         if (formData.username !== '' && formData.email !== '' && formData.age !== '' && formData.address !== '') {
-
             setUserData((prevState) => ([...prevState, formData]));
 
             setFormData({
@@ -102,8 +103,8 @@ const AddUser = () => {
             });
         }
 
-    }
 
+    }
 
     const deleteUser = (index) => {
         userData.splice(index, 1);
@@ -111,15 +112,27 @@ const AddUser = () => {
     }
 
     const editUser = (user, index) => {
+        setError({
+            [index]: false
+        })
         setFormData({ ...user })
         setButtonChanged(true);
+
     }
 
     const updateUser = (id) => {
-        // console.log(formData);
-        const foundUser = userData.find((user) => user.id === id);
-        userData.splice(foundUser, 1, formData);
-        setUserData([...userData]);
+        setUserData(prevState => {
+            const newState = prevState.map(obj => {
+                if (obj.id === id) {
+                    return { ...formData };
+                }
+                return obj;
+            });
+
+            return newState;
+        })
+
+        setButtonChanged(false);
 
         setFormData({
             username: "",
@@ -129,7 +142,7 @@ const AddUser = () => {
             gender: "female",
             languages: []
         });
-
+        setError(!error)
     }
 
 
@@ -269,7 +282,7 @@ const AddUser = () => {
                 </form>
             </div>
             <div>
-                <div className='w-full mt-20 text-center'>
+                <div className='mt-20 text-center'>
                     <h1 className='text-primaryColor text-3xl font-bold pb-8'>User Listing</h1>
                 </div>
                 <div className='flex flex-col w-4/5'>
@@ -308,7 +321,7 @@ const AddUser = () => {
                     </table>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
