@@ -10,7 +10,7 @@ const AddUser = () => {
     });
     const [userData, setUserData] = useState([
         {
-            id: 0,
+            id: 1,
             username: 'Rabia',
             email: 'Khan@gmail.com',
             age: '22',
@@ -18,7 +18,7 @@ const AddUser = () => {
             gender: 'female',
             languages: [],
         }, {
-            id: 1,
+            id: 2,
             username: 'aqsa',
             email: 'Khan@gmail.com',
             age: '18',
@@ -69,6 +69,7 @@ const AddUser = () => {
                 }
             )
         }
+
     }
 
     const handelSubmit = (event) => {
@@ -88,6 +89,7 @@ const AddUser = () => {
             setError((prevError) => ({ ...prevError, address: "address required" }))
         }
         if (formData.username !== '' && formData.email !== '' && formData.age !== '' && formData.address !== '') {
+
             setUserData((prevState) => ([...prevState, formData]));
 
             setFormData({
@@ -101,6 +103,7 @@ const AddUser = () => {
         }
 
     }
+
 
     const deleteUser = (index) => {
         userData.splice(index, 1);
@@ -117,6 +120,15 @@ const AddUser = () => {
         const foundUser = userData.find((user) => user.id === id);
         userData.splice(foundUser, 1, formData);
         setUserData([...userData]);
+
+        setFormData({
+            username: "",
+            email: "",
+            age: "",
+            address: "",
+            gender: "female",
+            languages: []
+        });
 
     }
 
@@ -257,7 +269,7 @@ const AddUser = () => {
                 </form>
             </div>
             <div>
-                <div className='mt-20 text-center'>
+                <div className='w-full mt-20 text-center'>
                     <h1 className='text-primaryColor text-3xl font-bold pb-8'>User Listing</h1>
                 </div>
                 <div className='flex flex-col w-4/5'>
@@ -296,7 +308,7 @@ const AddUser = () => {
                     </table>
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 

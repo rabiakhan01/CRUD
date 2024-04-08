@@ -22,7 +22,7 @@ const InputField = ({
                 onChange={onChange}
                 className={`outline outline-1 outline-outlineColor rounded-md h-12 w-72 pl-5 mt-5 ${error ? 'outline-red-600' : ''} `}
             />
-            {error && <span className='text-red-600'>{error}</span>}
+            {error && <span className='text-red-600 w-full text-start mt-1'>{error}</span>}
         </React.Fragment>
     );
 }
