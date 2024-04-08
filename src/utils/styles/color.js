@@ -1,7 +1,8 @@
 const outlineColor = "#EAE5F3";
 const primaryColor = "#7D17C4";
 const textColor = "#ffffff";
-const dangerColor = "#D10000";
+const dangerColor = "#bb2124";
+const successColor = "#22bb33";
 
 
 export {
@@ -9,4 +10,5 @@ export {
     outlineColor,
     textColor,
     dangerColor,
+    successColor,
 }

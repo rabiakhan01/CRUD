@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { InputField } from '../../Shared';
 const AddUser = () => {
+
     const [error, setError] = useState({
         username: '',
         email: '',
@@ -14,7 +15,7 @@ const AddUser = () => {
             email: 'Khan@gmail.com',
             age: '22',
             address: '21 lahore',
-            gender: 'male',
+            gender: 'female',
             languages: [],
         }, {
             id: 1,
@@ -22,7 +23,7 @@ const AddUser = () => {
             email: 'Khan@gmail.com',
             age: '18',
             address: 'thokar',
-            gender: 'male',
+            gender: 'female',
             languages: [],
         },
 
@@ -36,6 +37,8 @@ const AddUser = () => {
         gender: 'male',
         languages: [],
     })
+
+    const [buttonChanged, setButtonChanged] = useState(false);
 
     const handelChange = (event) => {
         const { name, value, checked } = event.target;
@@ -92,7 +95,7 @@ const AddUser = () => {
                 email: "",
                 age: "",
                 address: "",
-                gender: "male",
+                gender: "female",
                 languages: []
             });
         }
@@ -104,11 +107,31 @@ const AddUser = () => {
         setUserData([...userData])
     }
 
+    const editUser = (user, index) => {
+        setFormData({ ...user })
+        setButtonChanged(true);
+    }
+
+    const updateUser = (id) => {
+        // console.log(formData);
+        const foundUser = userData.find((user) => user.id === id);
+        userData.splice(foundUser, 1, formData);
+        setUserData([...userData]);
+
+    }
+
+
+
     return (
         <div className='w-full flex flex-col justify-center items-center'>
             <div className='w-full lg:w-1/2'>
                 <form className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center py-5' onSubmit={handelSubmit}>
-                    <h1 className='text-primaryColor text-3xl font-bold pb-8'>Add User</h1>
+                    {
+                        buttonChanged ?
+                            <h1 className='text-primaryColor text-3xl font-bold pb-8'>Update User</h1>
+                            :
+                            <h1 className='text-primaryColor text-3xl font-bold pb-8'>Add User</h1>
+                    }
                     <div className='flex flex-col items-center'>
                         <InputField
                             name="username"
@@ -224,13 +247,18 @@ const AddUser = () => {
                         </div>
                     </div>
                     <div className='flex w-full justify-center items-center mt-6'>
-                        <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl'>Add User</button>
+                        {
+                            buttonChanged ?
+                                <button type='button' className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={() => updateUser(formData.id)}>Update User</button>
+                                :
+                                <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl'>Add User</button>
+                        }
                     </div>
                 </form>
             </div>
             <div>
                 <div className='mt-20 text-center'>
-                    <h1 className='text-primaryColor text-3xl font-bold pb-8'>User Detail</h1>
+                    <h1 className='text-primaryColor text-3xl font-bold pb-8'>User Listing</h1>
                 </div>
                 <div className='flex flex-col w-4/5'>
                     <table className="table-auto border border-primaryColor">
@@ -257,7 +285,8 @@ const AddUser = () => {
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.address}</td>
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
                                             <td className='flex gap-2 border border-primaryColor px-6 text-textColor'>
-                                                <button className='bg-dangerColor px-1 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>
+                                                <button className='bg-dangerColor w-14 h-8 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>
+                                                <button className='bg-successColor w-14 rounded-sm' onClick={() => editUser(user, index)}>Edit</button>
                                             </td>
                                         </tr>
                                     )
