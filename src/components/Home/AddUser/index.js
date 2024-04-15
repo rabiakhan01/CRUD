@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { InputField } from '../../Shared';
 const AddUser = () => {
 
@@ -37,8 +37,8 @@ const AddUser = () => {
         gender: 'male',
         languages: [],
     })
-
     const [buttonChanged, setButtonChanged] = useState(false);
+
 
     const handelChange = (event) => {
 
@@ -72,9 +72,10 @@ const AddUser = () => {
                 }
             )
         }
+
     }
 
-    const handelSubmit = (event) => {
+    const handelClick = (event) => {
 
         event.preventDefault();
 
@@ -91,7 +92,10 @@ const AddUser = () => {
             setError((prevError) => ({ ...prevError, address: "address required" }))
         }
         if (formData.username !== '' && formData.email !== '' && formData.age !== '' && formData.address !== '') {
-            setUserData((prevState) => ([...prevState, formData]));
+
+            const updateData = [...userData, formData];
+            const setUser = JSON.stringify(updateData);
+            localStorage.setItem("user", setUser);
 
             setFormData({
                 username: "",
@@ -103,17 +107,24 @@ const AddUser = () => {
             });
         }
 
-
     }
 
     const deleteUser = (index) => {
+
         userData.splice(index, 1);
-        setUserData([...userData])
+
+        const updateData = userData;
+        const setUser = JSON.stringify(updateData);
+
+        localStorage.setItem("user", setUser);
+
+        setUserData([...userData]);
+
     }
 
     const editUser = (user, index) => {
         setError({
-            [index]: false
+            [index]: false,
         })
         setFormData({ ...user })
         setButtonChanged(true);
@@ -121,19 +132,21 @@ const AddUser = () => {
     }
 
     const updateUser = (id) => {
+        let newData;
         setUserData(prevState => {
-            const newState = prevState.map(obj => {
-                if (obj.id === id) {
+            newData = prevState.map(user => {
+                if (user.id === id) {
                     return { ...formData };
                 }
-                return obj;
+                return user;
             });
 
-            return newState;
+            const updateUser = JSON.stringify(newData);
+            localStorage.setItem("user", updateUser);
+            return newData;
+
         })
-
         setButtonChanged(false);
-
         setFormData({
             username: "",
             email: "",
@@ -142,15 +155,19 @@ const AddUser = () => {
             gender: "female",
             languages: []
         });
-        setError(!error)
+
     }
 
+    useEffect(() => {
+        const getUser = JSON.parse(localStorage.getItem("user"));
+        setUserData([...getUser]);
+    }, [formData])
 
 
     return (
         <div className='w-full flex flex-col justify-center items-center'>
             <div className='w-full lg:w-1/2'>
-                <form className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center py-5' onSubmit={handelSubmit}>
+                <div className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center py-5'>
                     {
                         buttonChanged ?
                             <h1 className='text-primaryColor text-3xl font-bold pb-8'>Update User</h1>
@@ -276,10 +293,10 @@ const AddUser = () => {
                             buttonChanged ?
                                 <button type='button' className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={() => updateUser(formData.id)}>Update User</button>
                                 :
-                                <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl'>Add User</button>
+                                <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={handelClick}>Add User</button>
                         }
                     </div>
-                </form>
+                </div>
             </div>
             <div>
                 <div className='mt-20 text-center'>
