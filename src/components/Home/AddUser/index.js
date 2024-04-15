@@ -1,7 +1,6 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { InputField } from '../../Shared';
 const AddUser = () => {
-
 
     const [error, setError] = useState({
         username: '',
@@ -38,8 +37,8 @@ const AddUser = () => {
         gender: 'male',
         languages: [],
     })
-
     const [buttonChanged, setButtonChanged] = useState(false);
+
 
     const handelChange = (event) => {
 
@@ -73,6 +72,7 @@ const AddUser = () => {
                 }
             )
         }
+
     }
 
     const handelClick = (event) => {
@@ -92,7 +92,10 @@ const AddUser = () => {
             setError((prevError) => ({ ...prevError, address: "address required" }))
         }
         if (formData.username !== '' && formData.email !== '' && formData.age !== '' && formData.address !== '') {
-            setUserData((prevState) => ([...prevState, formData]));
+
+            const updateData = [...userData, formData];
+            const setUser = JSON.stringify(updateData);
+            localStorage.setItem("user", setUser);
 
             setFormData({
                 username: "",
@@ -104,12 +107,19 @@ const AddUser = () => {
             });
         }
 
-
     }
 
     const deleteUser = (index) => {
+
         userData.splice(index, 1);
-        setUserData([...userData])
+
+        const updateData = userData;
+        const setUser = JSON.stringify(updateData);
+
+        localStorage.setItem("user", setUser);
+
+        setUserData([...userData]);
+
     }
 
     const editUser = (user, index) => {
@@ -122,19 +132,21 @@ const AddUser = () => {
     }
 
     const updateUser = (id) => {
+        let newData;
         setUserData(prevState => {
-            const newState = prevState.map(obj => {
-                if (obj.id === id) {
+            newData = prevState.map(user => {
+                if (user.id === id) {
                     return { ...formData };
                 }
-                return obj;
+                return user;
             });
 
-            return newState;
+            const updateUser = JSON.stringify(newData);
+            localStorage.setItem("user", updateUser);
+            return newData;
+
         })
-
         setButtonChanged(false);
-
         setFormData({
             username: "",
             email: "",
@@ -146,6 +158,10 @@ const AddUser = () => {
 
     }
 
+    useEffect(() => {
+        const getUser = JSON.parse(localStorage.getItem("user"));
+        setUserData([...getUser]);
+    }, [formData])
 
 
     return (
