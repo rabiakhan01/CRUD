@@ -2,6 +2,7 @@ import React, { forwardRef, useState } from 'react';
 import { InputField } from '../../Shared';
 const AddUser = () => {
 
+
     const [error, setError] = useState({
         username: '',
         email: '',
@@ -74,7 +75,7 @@ const AddUser = () => {
         }
     }
 
-    const handelSubmit = (event) => {
+    const handelClick = (event) => {
 
         event.preventDefault();
 
@@ -113,7 +114,7 @@ const AddUser = () => {
 
     const editUser = (user, index) => {
         setError({
-            [index]: false
+            [index]: false,
         })
         setFormData({ ...user })
         setButtonChanged(true);
@@ -142,7 +143,7 @@ const AddUser = () => {
             gender: "female",
             languages: []
         });
-        setError(!error)
+
     }
 
 
@@ -150,7 +151,7 @@ const AddUser = () => {
     return (
         <div className='w-full flex flex-col justify-center items-center'>
             <div className='w-full lg:w-1/2'>
-                <form className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center py-5' onSubmit={handelSubmit}>
+                <div className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center py-5'>
                     {
                         buttonChanged ?
                             <h1 className='text-primaryColor text-3xl font-bold pb-8'>Update User</h1>
@@ -276,10 +277,10 @@ const AddUser = () => {
                             buttonChanged ?
                                 <button type='button' className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={() => updateUser(formData.id)}>Update User</button>
                                 :
-                                <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl'>Add User</button>
+                                <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={handelClick}>Add User</button>
                         }
                     </div>
-                </form>
+                </div>
             </div>
             <div>
                 <div className='mt-20 text-center'>
