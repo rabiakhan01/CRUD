@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { InputField } from '../../components/Shared';
 import Layout from '../../utils/Layout';
-import { useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const AddUser = () => {
-    const { state } = useLocation();
-
+    const { id } = useParams();
+    const navigate = useNavigate();
 
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("user")))
 
@@ -16,7 +16,7 @@ const AddUser = () => {
         address: ''
     });
     const [formData, setFormData] = useState({
-        id: 0,
+        id: null,
         username: '',
         email: '',
         age: '',
@@ -25,14 +25,14 @@ const AddUser = () => {
         languages: [],
     })
     const [buttonChanged, setButtonChanged] = useState(false);
-
     useEffect(() => {
-
-        if (state) {
-            setFormData({ ...state })
-            setError(false);
-            setButtonChanged(true);
-        }
+        const getUser = JSON.parse(localStorage.getItem("user"));
+        getUser.map((user) => {
+            if (user.id === id) {
+                setFormData({ ...user })
+                setButtonChanged(true);
+            }
+        })
     }, [])
 
     const handelChange = (event) => {
@@ -58,6 +58,7 @@ const AddUser = () => {
         else {
             setFormData({
                 ...formData,
+                id: crypto.randomUUID(),
                 [name]: value,
             });
             setError(
@@ -92,7 +93,7 @@ const AddUser = () => {
             const setUser = JSON.stringify(updateData);
             localStorage.setItem("user", setUser);
             setUserData(updateData);
-
+            navigate("/user-listing")
             setFormData({
                 username: "",
                 email: "",
@@ -105,20 +106,22 @@ const AddUser = () => {
 
     }
 
-    const updateUser = (id) => {
-        console.log("state", state);
+    const updateUser = () => {
         let newData;
         setUserData(prevState => {
             newData = prevState.map(user => {
                 if (user.id === id) {
                     return { ...formData };
+
                 }
                 return user;
             });
 
             const updateUser = JSON.stringify(newData);
             localStorage.setItem("user", updateUser);
-            console.log(newData);
+
+            navigate("/user-listing")
+
             return newData;
 
         })
@@ -131,7 +134,6 @@ const AddUser = () => {
             gender: "female",
             languages: []
         });
-
     }
 
     return (
@@ -262,7 +264,7 @@ const AddUser = () => {
                         <div className='flex w-full justify-center items-center mt-6'>
                             {
                                 buttonChanged ?
-                                    <button type='button' className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={() => updateUser(state.id)}>Update User</button>
+                                    <button type='button' className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={updateUser}>Update User</button>
                                     :
                                     <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={handelSubmit}>Add User</button>
                             }

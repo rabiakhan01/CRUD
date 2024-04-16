@@ -3,6 +3,7 @@ import { useState } from "react";
 import Layout from "../../utils/Layout";
 import { useNavigate } from "react-router-dom";
 
+
 const Listing = () => {
     const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("user")))
     const navigate = useNavigate();
@@ -14,20 +15,13 @@ const Listing = () => {
         const setUser = JSON.stringify(updateData);
         localStorage.setItem("user", setUser);
 
-        console.log(updateData);
         setUserData([...updateData]);
 
     }
 
-    const editUser = (user, index) => {
-        console.log("from listing", user);
-        navigate("/add-new-user", { state: user, index })
-        // setError({
-        //     [index]: false,
-        // })
-        // setFormData({ ...user })
-        // setButtonChanged(true);
+    const editUser = (user) => {
 
+        navigate(`/update-user/${user.id}`);
     }
 
 
@@ -55,7 +49,7 @@ const Listing = () => {
                                 userData.map((user, index) => {
                                     return (
                                         <tr key={index} className='py-2'>
-                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.id = index + 1}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{index + 1}</td>
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.username}</td>
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.email}</td>
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.age}</td>
@@ -63,8 +57,7 @@ const Listing = () => {
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
                                             <td className='flex justify-center items-center gap-2 border border-primaryColor px-6 text-textColor'>
                                                 <button className='bg-dangerColor w-14 h-8 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>
-                                                <button className='bg-successColor w-14 rounded-sm' onClick={() => editUser(user, index)}>Update</button>
-
+                                                <button className='bg-successColor w-14 rounded-sm' onClick={() => editUser(user)}>Edit</button>
                                             </td>
                                         </tr>
                                     )

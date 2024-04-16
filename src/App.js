@@ -14,6 +14,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/add-new-user' element={<AddUser />} />
         <Route path='/user-listing' element={<Listing />} />
+        <Route path='/update-user/:id' element={<AddUser />} />
       </Routes>
     </BrowserRouter>
   );
