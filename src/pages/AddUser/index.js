@@ -1,6 +1,7 @@
-import React, { forwardRef, useEffect, useState } from 'react';
-import { InputField } from '../../Shared';
+import React, { useState } from 'react';
+import { InputField } from '../../components/Shared';
 const AddUser = () => {
+    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("user")))
 
     const [error, setError] = useState({
         username: '',
@@ -8,26 +9,6 @@ const AddUser = () => {
         age: '',
         address: ''
     });
-    const [userData, setUserData] = useState([
-        {
-            id: 0,
-            username: 'Rabia',
-            email: 'Khan@gmail.com',
-            age: '22',
-            address: '21 lahore',
-            gender: 'female',
-            languages: [],
-        }, {
-            id: 1,
-            username: 'aqsa',
-            email: 'Khan@gmail.com',
-            age: '18',
-            address: 'thokar',
-            gender: 'female',
-            languages: [],
-        },
-
-    ])
     const [formData, setFormData] = useState({
         id: 0,
         username: '',
@@ -75,7 +56,7 @@ const AddUser = () => {
 
     }
 
-    const handelClick = (event) => {
+    const handelSubmit = (event) => {
 
         event.preventDefault();
 
@@ -96,6 +77,7 @@ const AddUser = () => {
             const updateData = [...userData, formData];
             const setUser = JSON.stringify(updateData);
             localStorage.setItem("user", setUser);
+            setUserData(updateData);
 
             setFormData({
                 username: "",
@@ -106,28 +88,6 @@ const AddUser = () => {
                 languages: []
             });
         }
-
-    }
-
-    const deleteUser = (index) => {
-
-        userData.splice(index, 1);
-
-        const updateData = userData;
-        const setUser = JSON.stringify(updateData);
-
-        localStorage.setItem("user", setUser);
-
-        setUserData([...userData]);
-
-    }
-
-    const editUser = (user, index) => {
-        setError({
-            [index]: false,
-        })
-        setFormData({ ...user })
-        setButtonChanged(true);
 
     }
 
@@ -158,15 +118,9 @@ const AddUser = () => {
 
     }
 
-    useEffect(() => {
-        const getUser = JSON.parse(localStorage.getItem("user"));
-        setUserData([...getUser]);
-    }, [formData])
-
-
     return (
         <div className='w-full flex flex-col justify-center items-center'>
-            <div className='w-full lg:w-1/2'>
+            <div className='w-full lg:w-1/2 '>
                 <div className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center py-5'>
                     {
                         buttonChanged ?
@@ -210,7 +164,7 @@ const AddUser = () => {
                             error={error.address}
                         />
                     </div>
-                    <div className='flex flex-col gap-1'>
+                    <div className='flex flex-col gap-1 w-72'>
                         <div>
                             <label>Gender</label>
                         </div>
@@ -243,7 +197,7 @@ const AddUser = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='flex flex-col gap-1'>
+                    <div className='flex flex-col gap-1 w-72'>
                         <div>
                             <label>
                                 Favourit Languages
@@ -293,51 +247,12 @@ const AddUser = () => {
                             buttonChanged ?
                                 <button type='button' className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={() => updateUser(formData.id)}>Update User</button>
                                 :
-                                <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={handelClick}>Add User</button>
+                                <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={handelSubmit}>Add User</button>
                         }
                     </div>
                 </div>
             </div>
-            <div>
-                <div className='mt-20 text-center'>
-                    <h1 className='text-primaryColor text-3xl font-bold pb-8'>User Listing</h1>
-                </div>
-                <div className='flex flex-col w-4/5'>
-                    <table className="table-auto border border-primaryColor">
-                        <thead className='bg-primaryColor'>
-                            <tr className='text-textColor text-medium text-base'>
-                                <th className='px-6 py-2'>Sr#</th>
-                                <th className='px-6'>Username</th>
-                                <th className='px-6'>Email</th>
-                                <th className='px-6'>Age</th>
-                                <th className='px-6'>Address</th>
-                                <th className='px-6'>Gender</th>
-                                <th className='px-6'>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                userData.map((user, index) => {
-                                    return (
-                                        <tr key={index} className='py-2'>
-                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.id = index + 1}</td>
-                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.username}</td>
-                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.email}</td>
-                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.age}</td>
-                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.address}</td>
-                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
-                                            <td className='flex gap-2 border border-primaryColor px-6 text-textColor'>
-                                                <button className='bg-dangerColor w-14 h-8 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>
-                                                <button className='bg-successColor w-14 rounded-sm' onClick={() => editUser(user, index)}>Edit</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+
         </div >
     );
 }
