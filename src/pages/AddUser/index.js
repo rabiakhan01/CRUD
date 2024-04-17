@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { InputField } from '../../components/Shared';
+import { Button, InputField } from '../../components/Shared';
 import Layout from '../../utils/Layout';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -28,7 +28,7 @@ const AddUser = () => {
     useEffect(() => {
         const getUser = JSON.parse(localStorage.getItem("user"));
         getUser.map((user) => {
-            if (user.id === id) {
+            if (user.id == id) {
                 setFormData({ ...user })
                 setButtonChanged(true);
             }
@@ -58,7 +58,7 @@ const AddUser = () => {
         else {
             setFormData({
                 ...formData,
-                id: crypto.randomUUID(),
+                id: Math.floor(Math.random() * 100),
                 [name]: value,
             });
             setError(
@@ -110,7 +110,7 @@ const AddUser = () => {
         let newData;
         setUserData(prevState => {
             newData = prevState.map(user => {
-                if (user.id === id) {
+                if (user.id == id) {
                     return { ...formData };
 
                 }
@@ -264,9 +264,15 @@ const AddUser = () => {
                         <div className='flex w-full justify-center items-center mt-6'>
                             {
                                 buttonChanged ?
-                                    <button type='button' className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={updateUser}>Update User</button>
+                                    <Button
+                                        name="Update User"
+                                        onClick={updateUser}
+                                    />
                                     :
-                                    <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={handelSubmit}>Add User</button>
+                                    <Button
+                                        name="Add User"
+                                        onClick={handelSubmit}
+                                    />
                             }
                         </div>
                     </div>

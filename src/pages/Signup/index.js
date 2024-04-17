@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { InputField } from "../../components/Shared";
+import { InputField, Button } from "../../components/Shared";
 import Layout from "../../utils/Layout";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-    const [user, setUser] = useState([]);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("loginUser")));
     const [formData, setFormData] = useState({
         id: null,
         username: '',
@@ -23,7 +23,7 @@ const SignUp = () => {
         setFormData(
             {
                 ...formData,
-                id: crypto.randomUUID(),
+                id: Math.floor(Math.random() * 100),
                 [name]: value
             });
         setError({
@@ -48,18 +48,16 @@ const SignUp = () => {
         if (formData.username !== '' && formData.email !== '' && formData.password !== '') {
 
             const updateData = [...user, formData];
+            console.log("update data", updateData)
             const setData = JSON.stringify(updateData);
             localStorage.setItem("loginUser", setData);
-            console.log(updateData)
             setUser([...updateData]);
             setFormData({
                 username: "",
                 email: "",
                 password: ""
             });
-            navigate("/login");
         }
-
 
     }
 
@@ -98,7 +96,10 @@ const SignUp = () => {
                         />
                     </form>
                 </div>
-                <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={handelSubmit}>SignUp</button>
+                <Button
+                    name="Sign Up"
+                    onClick={handelSubmit}
+                />
             </div>
         </Layout>
     );

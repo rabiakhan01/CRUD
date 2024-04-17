@@ -1,8 +1,8 @@
-import react from 'react';
+import React from 'react';
 
-const Button = ({ }) => {
+const Button = ({ name, onClick }) => {
     return (
-        <div>hello button</div>
+        <button type='button' className={`bg-primaryColor text-white flex px-6 py-2 rounded-xl`} onClick={onClick}>{name}</button>
     );
 }
 

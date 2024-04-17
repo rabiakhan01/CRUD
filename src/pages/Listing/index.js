@@ -20,7 +20,6 @@ const Listing = () => {
     }
 
     const editUser = (user) => {
-
         navigate(`/update-user/${user.id}`);
     }
 

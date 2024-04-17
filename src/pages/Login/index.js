@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputField } from "../../components/Shared";
+import { Button, InputField } from "../../components/Shared";
 import Layout from "../../utils/Layout";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
@@ -63,7 +63,10 @@ const Login = () => {
                         {loggedIn && <span>{loginMessage}</span>}
                     </form>
                 </div>
-                <button className='bg-primaryColor text-white flex px-6 py-2 rounded-xl' onClick={handelLogin}>Sign In</button>
+                <Button
+                    name="Sign In"
+                    onClick={handelLogin}
+                />
                 <button className='bg-white text-primaryColor font-medium flex px-10 py-1.5 rounded-full outline outline-1 outline-outlineColor' onClick={createAccount}>Create New Account</button>
             </div>
         </Layout>
