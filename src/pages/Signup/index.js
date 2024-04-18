@@ -30,6 +30,7 @@ const SignUp = () => {
         email: '',
         password: ''
     });
+    const [errorMessage, setErrorMessage] = useState();
     const navigate = useNavigate();
 
     // handel input data from the input fields.
@@ -46,6 +47,7 @@ const SignUp = () => {
             ...error,
             [name]: false
         })
+        setErrorMessage(false);
     }
 
     //handel the submitted data from the form 
@@ -69,23 +71,24 @@ const SignUp = () => {
         if (signUpData.username !== '' && signUpData.email !== '' && signUpData.password !== '') {
 
             const updateData = [...signUpUser, signUpData];
-
             setSignUpUser(updateData);
+
             const newArray = signUpUser.find(user => user.username === signUpData.username || user.password === signUpData.password);
             if (signUpUser.length > 0) {
                 if (newArray) {
                     setExistUser(true);
+                    setErrorMessage("user exists choose another username or password");
                 }
                 else {
-                    console.log("add user")
                     const setUser = JSON.stringify(updateData);
                     localStorage.setItem("loginUser", setUser);
-                    navigate("/login")
+                    navigate("/login");
                 }
             }
             else {
                 const setUser = JSON.stringify(updateData);
                 localStorage.setItem("loginUser", setUser);
+                navigate("/login");
             }
         }
 
@@ -99,9 +102,8 @@ const SignUp = () => {
 
     return (
         <Layout>
-            {existUser && <spann>user exists choose another username or password</spann>}
             <div className="flex flex-col w-full justify-center items-center outline outline-1 outline-outlineColor m-5 p-10 gap-5">
-                {existUser && <span>user already exists</span>}
+                {existUser && <span className="text-base font-medium text-errorColor">{errorMessage}</span>}
                 <div>
                     <h1 className="text-primaryColor text-3xl font-bold pb-8">SignUp Form</h1>
                 </div>

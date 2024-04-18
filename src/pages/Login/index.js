@@ -10,8 +10,10 @@ const Login = () => {
     });
     const [loggedIn, setLoggedIn] = useState(false);
     const [loginMessage, setLoginMessage] = useState('');
+    const [error, setError] = useState(false)
     const navigate = useNavigate();
     let login;
+
     // handel values of input fields of login form
     const handelChange = (event) => {
         const { name, value } = event.target;
@@ -19,36 +21,47 @@ const Login = () => {
             ...loginUser,
             [name]: value
         })
+        setError(false)
+        setLoginMessage(false)
+
     }
 
     //handel login user
     const handelLogin = () => {
 
         const getUser = JSON.parse(localStorage.getItem("loginUser"));
-        getUser.map((user) => {
-            if (user.username === loginUser.username && user.password === loginUser.password) {
-                user.isLogin = true;
-                login = user.isLogin;
-                const setUser = JSON.stringify(getUser);
-                console.log("getUser", setUser)
-                localStorage.setItem("loginUser", setUser);
+        if (getUser) {
+            getUser.map((user) => {
+                if (user.username === loginUser.username && user.password === loginUser.password) {
+                    user.isLogin = true;
+                    login = user.isLogin;
+                    const setUser = JSON.stringify(getUser);
+                    console.log("getUser", setUser)
+                    localStorage.setItem("loginUser", setUser);
+                    navigate("/user-listing", { state: login });
+                }
+                else {
+                    setLoggedIn(true);
+                    if (loginUser.username === '' || loginUser.email === '') {
+                        setError(true);
+                    }
+                    setError(true);
+                    setLoginMessage("valid username and password required")
+                }
+            })
+        }
+        else {
+            setLoggedIn(true);
+            setError(true);
+            setLoginMessage("valid username and password required")
+        }
 
-                navigate("/user-listing", { state: login });
-            }
-            else {
-                setLoggedIn(true);
-                setLoginMessage('username or password incorrect');
-            }
-        })
-        setLoginUser({
-            username: '',
-            password: ''
-        })
     }
     // if user is not have account than navigate through this button to the signup page
     const createAccount = () => {
         navigate("/signup");
     }
+
     return (
         <Layout>
             <div className="flex flex-col justify-center items-center outline outline-1 outline-outlineColor m-5 p-10 gap-5">
@@ -63,6 +76,7 @@ const Login = () => {
                             placeholder="Username"
                             value={loginUser.username}
                             onChange={handelChange}
+                            error={error}
                         />
                         <InputField
                             name="password"
@@ -70,8 +84,9 @@ const Login = () => {
                             placeholder="password"
                             value={loginUser.password}
                             onChange={handelChange}
+                            error={error}
                         />
-                        {loggedIn && <span>{loginMessage}</span>}
+                        {loggedIn && <span className="text-errorColor">{loginMessage}</span>}
                     </form>
                 </div>
                 <Button

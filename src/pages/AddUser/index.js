@@ -7,8 +7,17 @@ const AddUser = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("user")))
+    const getUser = () => {
+        const user = localStorage.getItem("users");
+        if (user) {
+            return JSON.parse(user);
+        }
+        else {
+            return [];
+        }
+    }
 
+    const [userData, setUserData] = useState(getUser())
     const [error, setError] = useState({
         username: '',
         email: '',
@@ -25,15 +34,17 @@ const AddUser = () => {
         languages: [],
     })
     const [buttonChanged, setButtonChanged] = useState(false);
-    useEffect(() => {
-        const getUser = JSON.parse(localStorage.getItem("user"));
-        getUser.map((user) => {
-            if (user.id == id) {
-                setFormData({ ...user })
-                setButtonChanged(true);
-            }
-        })
-    }, [])
+    const [existUser, setExistUser] = useState(false);
+
+    // useEffect(() => {
+    //     const getUser = JSON.parse(localStorage.getItem("user"));
+    //     getUser.map((user) => {
+    //         if (user.id == id) {
+    //             setFormData({ ...user })
+    //             setButtonChanged(true);
+    //         }
+    //     })
+    // }, [id])
 
     const handelChange = (event) => {
 
@@ -90,20 +101,31 @@ const AddUser = () => {
         if (formData.username !== '' && formData.email !== '' && formData.age !== '' && formData.address !== '') {
 
             const updateData = [...userData, formData];
-            const setUser = JSON.stringify(updateData);
-            localStorage.setItem("user", setUser);
             setUserData(updateData);
-            navigate("/user-listing")
-            setFormData({
-                username: "",
-                email: "",
-                age: "",
-                address: "",
-                gender: "female",
-                languages: []
-            });
-        }
 
+            const newUser = userData.find(user => user.email === formData.email);
+            if (userData.length > 0) {
+                if (newUser) {
+                    setExistUser(true);
+                }
+                else {
+                    const setUser = JSON.stringify(updateData);
+                    localStorage.setItem("users", setUser);
+                }
+            }
+            else {
+                const setUser = JSON.stringify(updateData);
+                localStorage.setItem("users", setUser);
+            }
+        }
+        setFormData({
+            username: "",
+            email: "",
+            age: "",
+            address: "",
+            gender: "female",
+            languages: []
+        })
     }
 
     const updateUser = () => {
@@ -112,7 +134,6 @@ const AddUser = () => {
             newData = prevState.map(user => {
                 if (user.id == id) {
                     return { ...formData };
-
                 }
                 return user;
             });

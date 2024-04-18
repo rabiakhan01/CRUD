@@ -4,7 +4,6 @@ import Layout from "../../utils/Layout";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../../components/Shared";
 
-
 const Listing = () => {
 
     const navigate = useNavigate();
