@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, InputField } from "../../components/Shared";
 import Layout from "../../utils/Layout";
 import { useNavigate } from "react-router-dom";
+
 const Login = () => {
     const [loginUser, setLoginUser] = useState({
         username: '',
@@ -9,6 +10,9 @@ const Login = () => {
     });
     const [loggedIn, setLoggedIn] = useState(false);
     const [loginMessage, setLoginMessage] = useState('');
+    const navigate = useNavigate();
+    let login;
+    // handel values of input fields of login form
     const handelChange = (event) => {
         const { name, value } = event.target;
         setLoginUser({
@@ -16,13 +20,20 @@ const Login = () => {
             [name]: value
         })
     }
-    const navigate = useNavigate();
 
+    //handel login user
     const handelLogin = () => {
+
         const getUser = JSON.parse(localStorage.getItem("loginUser"));
         getUser.map((user) => {
             if (user.username === loginUser.username && user.password === loginUser.password) {
-                navigate("/user-listing");
+                user.isLogin = true;
+                login = user.isLogin;
+                const setUser = JSON.stringify(getUser);
+                console.log("getUser", setUser)
+                localStorage.setItem("loginUser", setUser);
+
+                navigate("/user-listing", { state: login });
             }
             else {
                 setLoggedIn(true);
@@ -34,7 +45,7 @@ const Login = () => {
             password: ''
         })
     }
-
+    // if user is not have account than navigate through this button to the signup page
     const createAccount = () => {
         navigate("/signup");
     }

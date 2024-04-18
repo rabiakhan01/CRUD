@@ -4,13 +4,27 @@ import Layout from "../../utils/Layout";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem("loginUser")));
-    const [formData, setFormData] = useState({
+    const getUser = () => {
+        const user = localStorage.getItem("loginUser");
+        if (user) {
+            return JSON.parse(user);
+        }
+        else {
+            return [];
+        }
+    }
+    // state to set the users detail
+    const [signUpUser, setSignUpUser] = useState(getUser());
+    const [signUpData, setSignUpData] = useState({
         id: null,
         username: '',
         email: '',
-        password: ''
+        password: '',
+        isLogin: false
     });
+    const [existUser, setExistUser] = useState(false);
+    //validation errors
+
     const [error, setError] = useState({
         username: '',
         email: '',
@@ -18,11 +32,13 @@ const SignUp = () => {
     });
     const navigate = useNavigate();
 
+    // handel input data from the input fields.
+
     const handelChange = (event) => {
         const { name, value } = event.target;
-        setFormData(
+        setSignUpData(
             {
-                ...formData,
+                ...signUpData,
                 id: Math.floor(Math.random() * 100),
                 [name]: value
             });
@@ -32,38 +48,60 @@ const SignUp = () => {
         })
     }
 
+    //handel the submitted data from the form 
+
     const handelSubmit = (event) => {
 
         event.preventDefault();
-        if (formData.username === '') {
+
+        if (signUpData.username === '') {
             setError((prevError) => ({ ...prevError, username: "username required" }))
         }
-        if (formData.email === '') {
+        if (signUpData.email === '') {
             setError((prevError) => ({ ...prevError, email: "email required" }))
         }
-        if (formData.password === '') {
+        if (signUpData.password === '') {
             setError((prevError) => ({ ...prevError, password: "password required" }))
         }
 
-        if (formData.username !== '' && formData.email !== '' && formData.password !== '') {
+        // check if the fields are not empty then submit it and update the user array
 
-            const updateData = [...user, formData];
-            console.log("update data", updateData)
-            const setData = JSON.stringify(updateData);
-            localStorage.setItem("loginUser", setData);
-            setUser([...updateData]);
-            setFormData({
-                username: "",
-                email: "",
-                password: ""
-            });
+        if (signUpData.username !== '' && signUpData.email !== '' && signUpData.password !== '') {
+
+            const updateData = [...signUpUser, signUpData];
+
+            setSignUpUser(updateData);
+            const newArray = signUpUser.find(user => user.username === signUpData.username || user.password === signUpData.password);
+            if (signUpUser.length > 0) {
+                if (newArray) {
+                    setExistUser(true);
+                }
+                else {
+                    console.log("add user")
+                    const setUser = JSON.stringify(updateData);
+                    localStorage.setItem("loginUser", setUser);
+                    navigate("/login")
+                }
+            }
+            else {
+                const setUser = JSON.stringify(updateData);
+                localStorage.setItem("loginUser", setUser);
+            }
         }
 
+        // set the input field empty after the values are submitted
+        setSignUpData({
+            username: "",
+            email: "",
+            password: ""
+        });
     }
 
     return (
         <Layout>
+            {existUser && <spann>user exists choose another username or password</spann>}
             <div className="flex flex-col w-full justify-center items-center outline outline-1 outline-outlineColor m-5 p-10 gap-5">
+                {existUser && <span>user already exists</span>}
                 <div>
                     <h1 className="text-primaryColor text-3xl font-bold pb-8">SignUp Form</h1>
                 </div>
@@ -73,7 +111,7 @@ const SignUp = () => {
                             name="username"
                             type="text"
                             placeholder="Username"
-                            value={formData.username}
+                            value={signUpData.username}
                             onChange={handelChange}
                             error={error.username}
 
@@ -82,7 +120,7 @@ const SignUp = () => {
                             name="email"
                             type="email"
                             placeholder="email"
-                            value={formData.email}
+                            value={signUpData.email}
                             onChange={handelChange}
                             error={error.email}
                         />
@@ -90,7 +128,7 @@ const SignUp = () => {
                             name="password"
                             type="password"
                             placeholder="password"
-                            value={formData.password}
+                            value={signUpData.password}
                             onChange={handelChange}
                             error={error.password}
                         />
