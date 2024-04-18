@@ -139,6 +139,7 @@ const AddUser = () => {
             setUserData(updateData);
             const setUser = JSON.stringify(updateData);
             localStorage.setItem("users", setUser);
+            navigate("/user-listing");
 
         }
         setFormData({

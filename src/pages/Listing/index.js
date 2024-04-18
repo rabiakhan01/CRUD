@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Layout from "../../utils/Layout";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Button } from "../../components/Shared";
+import { Button, OutlinedButton } from "../../components/Shared";
 
 const Listing = () => {
 
@@ -72,19 +72,28 @@ const Listing = () => {
         })
     }
 
+    //handel adding of new user
+    const handelAddUser = () => {
+        navigate("/add-new-user")
+    }
+
     return (
         <Layout>
             {
                 isLoggedIn
                     ?
                     <div className='w-full'>
-                        <div className="flex float-right">
+                        <div className="flex gap-5 float-right">
+                            <OutlinedButton
+                                name="Add New User"
+                                onClick={handelAddUser}
+                            />
                             <Button
                                 name="Log out"
                                 onClick={handelLogOut}
                             />
                         </div>
-                        <div className='mt-20 text-center'>
+                        <div className='mt-20'>
                             <h1 className='text-primaryColor text-3xl font-bold pb-8'>User Listing</h1>
                         </div>
                         <div className='flex flex-col relative overflow-x-auto'>
@@ -111,9 +120,9 @@ const Listing = () => {
                                                     <td className='border border-primaryColor px-6 text-nowrap'>{user.age}</td>
                                                     <td className='border border-primaryColor px-6 text-nowrap'>{user.address}</td>
                                                     <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
-                                                    <td className='flex justify-center items-center gap-2 border border-primaryColor px-6 text-textColor'>
+                                                    <td className='flex justify-center items-center gap-2  px-6 text-textColor my-1'>
                                                         <button className='bg-dangerColor w-14 h-8 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>
-                                                        <button className='bg-successColor w-14 rounded-sm' onClick={() => editUser(user)}>Edit</button>
+                                                        <button className='bg-successColor w-14 h-8 rounded-sm' onClick={() => editUser(user)}>Edit</button>
                                                     </td>
                                                 </tr>
                                             )
@@ -122,6 +131,7 @@ const Listing = () => {
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                     :
                     <Navigate to="/login" />

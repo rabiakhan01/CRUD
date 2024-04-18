@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Button, InputField } from "../../components/Shared";
+import { Button, InputField, OutlinedButton } from "../../components/Shared";
 import Layout from "../../utils/Layout";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import Images from "../../assets/images";
+import images from "../../assets/images";
 const Login = () => {
 
     //hook used for navigation from one page to another
     const navigate = useNavigate();
-    let login;
 
     //check if user already logged in
     const isLoginUser = () => {
@@ -76,11 +76,10 @@ const Login = () => {
                 //if the users matches the cred then navigate to the Listing page
                 if (user.username === loginUser.username && user.password === loginUser.password) {
                     user.isLogin = true;
-                    login = user.isLogin;
                     const setUser = JSON.stringify(getUser);
                     console.log("getUser", setUser)
                     localStorage.setItem("loginUser", setUser);
-                    navigate("/user-listing", { state: login });
+                    navigate("/user-listing");
                 }
 
                 // activate validations  
@@ -152,15 +151,19 @@ const Login = () => {
                                     placeholder="password"
                                     value={loginUser.password}
                                     onChange={handelChange}
-                                    error={error.password}
-                                />
+                                    error={error.password}>
+                                </InputField>
                             </form>
                         </div>
                         <Button
                             name="Sign In"
                             onClick={handelLogin}
                         />
-                        <button className='bg-white text-primaryColor font-medium flex px-10 py-1.5 rounded-full outline outline-1 outline-outlineColor' onClick={createAccount}>Create New Account</button>
+                        <OutlinedButton
+                            name="Create New Account"
+                            onClick={createAccount}
+                        />
+
                     </div>
                     :
                     <Navigate to="/user-listing" />

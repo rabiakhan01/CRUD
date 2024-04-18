@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputField, Button } from "../../components/Shared";
+import { InputField, Button, OutlinedButton } from "../../components/Shared";
 import Layout from "../../utils/Layout";
 import { useNavigate } from "react-router-dom";
 
@@ -143,7 +143,10 @@ const SignUp = () => {
                     name="Sign Up"
                     onClick={handelSubmit}
                 />
-                <button className='bg-white text-primaryColor font-medium flex px-10 py-1.5 rounded-full outline outline-1 outline-outlineColor' onClick={handelAccount}>Already have an account</button>
+                <OutlinedButton
+                    name="Already Have Account"
+                    onClick={handelAccount}
+                />
             </div>
         </Layout>
     );
