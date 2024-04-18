@@ -4,13 +4,26 @@ import Layout from "../../utils/Layout";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+
+    //handel state of input fields of login screen
     const [loginUser, setLoginUser] = useState({
         username: '',
         password: ''
     });
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [loginMessage, setLoginMessage] = useState('');
-    const [error, setError] = useState(false)
+
+    //handel state of validation errors
+    const [validationError, setValidationError] = useState(false);
+
+    // handel the validation error message
+    const [validationMessage, setValidationMessage] = useState('');
+
+    //handel the empty input fields errors
+    const [error, setError] = useState({
+        username: "",
+        password: ""
+    })
+
+    //hook used for navigation from one page to another
     const navigate = useNavigate();
     let login;
 
@@ -21,8 +34,11 @@ const Login = () => {
             ...loginUser,
             [name]: value
         })
-        setError(false)
-        setLoginMessage(false)
+        setError({
+            ...error,
+            [name]: false
+        })
+        setValidationMessage(false)
 
     }
 
@@ -41,25 +57,44 @@ const Login = () => {
                     navigate("/user-listing", { state: login });
                 }
                 else {
-                    setLoggedIn(true);
-                    if (loginUser.username === '' || loginUser.email === '') {
-                        setError(true);
+                    if (loginUser.username !== "" && loginUser.password !== "") {
+                        setValidationError(true);
+                        setValidationMessage("Please enter a valid username and password");
                     }
-                    setError(true);
-                    setLoginMessage("valid username and password required")
+                    else {
+                        if (loginUser.username === '') {
+                            setError((prevError) => ({ ...prevError, username: "username required" }))
+                        }
+                        if (loginUser.password === '') {
+                            setError((prevError) => ({ ...prevError, password: "password required" }))
+                        }
+                    }
                 }
             })
         }
         else {
-            setLoggedIn(true);
-            setError(true);
-            setLoginMessage("valid username and password required")
+            if (loginUser.username !== "" && loginUser.password !== "") {
+                setValidationError(true);
+                setValidationMessage("Account not exists please first create an account");
+                setLoginUser({
+                    username: "",
+                    password: ""
+                })
+            }
+            else {
+                if (loginUser.username === '') {
+                    setError((prevError) => ({ ...prevError, username: "username required" }))
+                }
+                if (loginUser.password === '') {
+                    setError((prevError) => ({ ...prevError, password: "password required" }))
+                }
+            }
         }
 
     }
     // if user is not have account than navigate through this button to the signup page
     const createAccount = () => {
-        navigate("/signup");
+        navigate("/");
     }
 
     return (
@@ -68,6 +103,7 @@ const Login = () => {
                 <div>
                     <h1 className="text-primaryColor text-3xl font-bold pb-8">Login Form</h1>
                 </div>
+                {validationError && <span className="text-errorColor">{validationMessage}</span>}
                 <div>
                     <form className="flex flex-col">
                         <InputField
@@ -76,7 +112,7 @@ const Login = () => {
                             placeholder="Username"
                             value={loginUser.username}
                             onChange={handelChange}
-                            error={error}
+                            error={error.username}
                         />
                         <InputField
                             name="password"
@@ -84,9 +120,8 @@ const Login = () => {
                             placeholder="password"
                             value={loginUser.password}
                             onChange={handelChange}
-                            error={error}
+                            error={error.password}
                         />
-                        {loggedIn && <span className="text-errorColor">{loginMessage}</span>}
                     </form>
                 </div>
                 <Button

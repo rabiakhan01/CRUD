@@ -100,6 +100,9 @@ const SignUp = () => {
         });
     }
 
+    const handelAccount = () => {
+        navigate("/login");
+    }
     return (
         <Layout>
             <div className="flex flex-col w-full justify-center items-center outline outline-1 outline-outlineColor m-5 p-10 gap-5">
@@ -140,6 +143,7 @@ const SignUp = () => {
                     name="Sign Up"
                     onClick={handelSubmit}
                 />
+                <button className='bg-white text-primaryColor font-medium flex px-10 py-1.5 rounded-full outline outline-1 outline-outlineColor' onClick={handelAccount}>Already have an account</button>
             </div>
         </Layout>
     );
