@@ -162,9 +162,9 @@ const Login = () => {
                                     {
                                         passwordIcon
                                             ?
-                                            <button type="button" className="" onClick={hidePassword}><img src={images.eye} alt="" className="h-5 w-5 absolute top-[5.7rem] left-48 sm:top-[6.5rem] sm:left-64" /></button>
+                                            <button type="button" className="" onClick={hidePassword}><img src={images.eye} alt="" className={`h-5 w-5 absolute ${error.password ? 'top-[7rem] left-48' : 'top-[5.7rem] left-48'} sm:top-[6.5rem] sm:left-64`} /></button>
                                             :
-                                            <button type="button" className="" onClick={showPassword}><img src={images.eyeSlash} alt="" className="h-5 w-5 absolute top-[5.7rem] left-48 sm:top-[6.5rem] sm:left-64" /></button>
+                                            <button type="button" className="" onClick={showPassword}><img src={images.eyeSlash} alt="" className={`h-5 w-5 absolute ${error.password ? 'top-[7rem] left-48' : 'top-[5.7rem] left-48'}  sm:top-[6.5rem] sm:left-64`} /></button>
                                     }
 
                                 </form>
