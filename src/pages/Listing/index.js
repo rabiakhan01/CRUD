@@ -85,23 +85,25 @@ const Listing = () => {
                     <div className='w-full'>
                         <div className="flex float-left">
                             <OutlinedButton
-                                name="Add New User"
+                                name="Add User"
                                 onClick={handelAddUser}
+                                smWidth="16"
                             />
                         </div>
                         <div className="flex gap-5 float-right">
                             <Button
                                 name="Log out"
                                 onClick={handelLogOut}
+                                smWidth="16"
                             />
                         </div>
                         <div className='mt-20 text-center'>
-                            <h1 className='text-primaryColor text-3xl font-bold pb-8'>User Listing</h1>
+                            <h1 className='text-primaryColor text-xl sm:text-2xl md:text-3xl font-bold pb-8 text-nowrap'>Student Listing</h1>
                         </div>
                         <div className='flex flex-col relative overflow-x-auto'>
                             <table className="table-fixed border border-primaryColor">
                                 <thead className='bg-primaryColor'>
-                                    <tr className='text-textColor text-medium text-base'>
+                                    <tr className='text-textColor text-medium text-sm sm:text-base'>
                                         <th className='px-6 py-2'>Sr#</th>
                                         <th className='px-6'>Username</th>
                                         <th className='px-6'>Email</th>
@@ -132,6 +134,9 @@ const Listing = () => {
                                     }
                                 </tbody>
                             </table>
+                            {
+                                userData.length < 1 && <span className="text-xl text-center font-bold text-primaryColor pt-96">No Record</span>
+                            }
                         </div>
 
                     </div>

@@ -201,7 +201,7 @@ const AddUser = () => {
         <Layout>
             {isLoggedIn
                 ?
-                <div className='w-full flex flex-col justify-center items-center'>
+                <div className='flex flex-col justify-center items-center h-lvh'>
                     <div className='w-full lg:w-1/2 '>
                         <div className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center pb-5'>
                             {
@@ -214,7 +214,7 @@ const AddUser = () => {
                                             />
                                         </div>
                                         <div className='text-center'>
-                                            <h1 className='text-primaryColor text-3xl font-bold'>Update User</h1>
+                                            <h1 className='text-primaryColor text-3xl font-bold'>Update Student</h1>
                                         </div>
                                         <div>
                                             <Button
@@ -232,7 +232,7 @@ const AddUser = () => {
                                             />
                                         </div>
                                         <div className='text-center'>
-                                            <h1 className='text-primaryColor text-2xl font-bold'>Add User</h1>
+                                            <h1 className='text-primaryColor text-2xl font-bold'>Add Student</h1>
                                         </div>
                                         <div>
                                             <Button
@@ -362,11 +362,13 @@ const AddUser = () => {
                                         <Button
                                             name="Update User"
                                             onClick={updateUser}
+                                            smWidth="16"
                                         />
                                         :
                                         <Button
                                             name="Add User"
                                             onClick={handelSubmit}
+                                            smWidth="16"
                                         />
                                 }
 
