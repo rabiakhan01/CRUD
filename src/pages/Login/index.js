@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Button, InputField, OutlinedButton } from "../../components/Shared";
 import Layout from "../../utils/Layout";
 import { Navigate, useNavigate } from "react-router-dom";
-import Images from "../../assets/images";
-import images from "../../assets/images";
+
 const Login = () => {
 
     //hook used for navigation from one page to another
@@ -130,40 +129,42 @@ const Login = () => {
             {
                 isLoggedIn
                     ?
-                    <div className="flex flex-col justify-center items-center outline outline-1 outline-outlineColor m-5 p-10 gap-5">
-                        <div>
-                            <h1 className="text-primaryColor text-3xl font-bold pb-8">Login Form</h1>
-                        </div>
-                        {validationError && <span className="text-errorColor">{validationMessage}</span>}
-                        <div>
-                            <form className="flex flex-col">
-                                <InputField
-                                    name="username"
-                                    type="text"
-                                    placeholder="Username"
-                                    value={loginUser.username}
-                                    onChange={handelChange}
-                                    error={error.username}
-                                />
-                                <InputField
-                                    name="password"
-                                    type="password"
-                                    placeholder="password"
-                                    value={loginUser.password}
-                                    onChange={handelChange}
-                                    error={error.password}>
-                                </InputField>
-                            </form>
-                        </div>
-                        <Button
-                            name="Sign In"
-                            onClick={handelLogin}
-                        />
-                        <OutlinedButton
-                            name="Create New Account"
-                            onClick={createAccount}
-                        />
+                    <div className="flex justify-center items-center h-lvh">
+                        <div className="flex flex-col w-4/5 sm:w-auto justify-center items-center outline outline-1 outline-outlineColor m-5 p-10 sm:px-20 sm:py-14 gap-5">
+                            <div>
+                                <h1 className="text-primaryColor text-2xl md:text-3xl font-bold pb-8">Login Form</h1>
+                            </div>
+                            {validationError && <span className="text-errorColor">{validationMessage}</span>}
+                            <div>
+                                <form className=" flex flex-col">
+                                    <InputField
+                                        name="username"
+                                        type="text"
+                                        placeholder="Username"
+                                        value={loginUser.username}
+                                        onChange={handelChange}
+                                        error={error.username}
+                                    />
+                                    <InputField
+                                        name="password"
+                                        type="password"
+                                        placeholder="password"
+                                        value={loginUser.password}
+                                        onChange={handelChange}
+                                        error={error.password}
+                                    />
+                                </form>
+                            </div>
+                            <Button
+                                name="Sign In"
+                                onClick={handelLogin}
+                            />
+                            <OutlinedButton
+                                name="Create New Account"
+                                onClick={createAccount}
+                            />
 
+                        </div>
                     </div>
                     :
                     <Navigate to="/user-listing" />

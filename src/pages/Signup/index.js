@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { InputField, Button, OutlinedButton } from "../../components/Shared";
 import Layout from "../../utils/Layout";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+
+    // get the user from local host
     const getUser = () => {
         const user = localStorage.getItem("loginUser");
         if (user) {
@@ -12,6 +14,24 @@ const SignUp = () => {
         else {
             return [];
         }
+    }
+
+    const isLoginUser = () => {
+
+        const getUser = JSON.parse(localStorage.getItem("loginUser"));
+        if (getUser) {
+            const user = getUser.find(user => user.isLogin === true);
+            if (user) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        else {
+            return true;
+        }
+
     }
     // state to set the users detail
     const [signUpUser, setSignUpUser] = useState(getUser());
@@ -23,8 +43,10 @@ const SignUp = () => {
         isLogin: false
     });
     const [existUser, setExistUser] = useState(false);
-    //validation errors
+    // check if user login than sign up page should not be accessed until the user logout
+    const [isLoggedIn, setisLoggedIn] = useState(isLoginUser());
 
+    //validation errors
     const [error, setError] = useState({
         username: '',
         email: '',
@@ -105,49 +127,57 @@ const SignUp = () => {
     }
     return (
         <Layout>
-            <div className="flex flex-col w-full justify-center items-center outline outline-1 outline-outlineColor m-5 p-10 gap-5">
-                {existUser && <span className="text-base font-medium text-errorColor">{errorMessage}</span>}
-                <div>
-                    <h1 className="text-primaryColor text-3xl font-bold pb-8">SignUp Form</h1>
-                </div>
-                <div>
-                    <form className="flex flex-col">
-                        <InputField
-                            name="username"
-                            type="text"
-                            placeholder="Username"
-                            value={signUpData.username}
-                            onChange={handelChange}
-                            error={error.username}
+            {
+                isLoggedIn
+                    ?
+                    <div className="flex justify-center items-center h-lvh">
+                        <div className="flex flex-col w-11/12 sm:w-auto justify-center items-center outline outline-1 outline-outlineColor m-5 p-10  sm:px-28 sm:py-16 gap-5">
+                            {existUser && <span className="text-base font-medium text-errorColor">{errorMessage}</span>}
+                            <div>
+                                <h1 className="text-primaryColor text-2xl sm:text-3xl font-bold pb-8 text-nowrap">SignUp Form</h1>
+                            </div>
+                            <div>
+                                <form className="flex flex-col">
+                                    <InputField
+                                        name="username"
+                                        type="text"
+                                        placeholder="Username"
+                                        value={signUpData.username}
+                                        onChange={handelChange}
+                                        error={error.username}
 
-                        />
-                        <InputField
-                            name="email"
-                            type="email"
-                            placeholder="email"
-                            value={signUpData.email}
-                            onChange={handelChange}
-                            error={error.email}
-                        />
-                        <InputField
-                            name="password"
-                            type="password"
-                            placeholder="password"
-                            value={signUpData.password}
-                            onChange={handelChange}
-                            error={error.password}
-                        />
-                    </form>
-                </div>
-                <Button
-                    name="Sign Up"
-                    onClick={handelSubmit}
-                />
-                <OutlinedButton
-                    name="Already Have Account"
-                    onClick={handelAccount}
-                />
-            </div>
+                                    />
+                                    <InputField
+                                        name="email"
+                                        type="email"
+                                        placeholder="email"
+                                        value={signUpData.email}
+                                        onChange={handelChange}
+                                        error={error.email}
+                                    />
+                                    <InputField
+                                        name="password"
+                                        type="password"
+                                        placeholder="password"
+                                        value={signUpData.password}
+                                        onChange={handelChange}
+                                        error={error.password}
+                                    />
+                                </form>
+                            </div>
+                            <Button
+                                name="Sign Up"
+                                onClick={handelSubmit}
+                            />
+                            <OutlinedButton
+                                name="Already Have Account"
+                                onClick={handelAccount}
+                            />
+                        </div>
+                    </div>
+                    :
+                    <Navigate to="/user-listing" />
+            }
         </Layout>
     );
 }

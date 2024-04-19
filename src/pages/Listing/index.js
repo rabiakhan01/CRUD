@@ -83,17 +83,19 @@ const Listing = () => {
                 isLoggedIn
                     ?
                     <div className='w-full'>
-                        <div className="flex gap-5 float-right">
+                        <div className="flex float-left">
                             <OutlinedButton
                                 name="Add New User"
                                 onClick={handelAddUser}
                             />
+                        </div>
+                        <div className="flex gap-5 float-right">
                             <Button
                                 name="Log out"
                                 onClick={handelLogOut}
                             />
                         </div>
-                        <div className='mt-20'>
+                        <div className='mt-20 text-center'>
                             <h1 className='text-primaryColor text-3xl font-bold pb-8'>User Listing</h1>
                         </div>
                         <div className='flex flex-col relative overflow-x-auto'>
@@ -120,7 +122,7 @@ const Listing = () => {
                                                     <td className='border border-primaryColor px-6 text-nowrap'>{user.age}</td>
                                                     <td className='border border-primaryColor px-6 text-nowrap'>{user.address}</td>
                                                     <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
-                                                    <td className='flex justify-center items-center gap-2  px-6 text-textColor my-1'>
+                                                    <td className='flex justify-center items-center gap-2  px-6 text-textColor border border-primaryColor'>
                                                         <button className='bg-dangerColor w-14 h-8 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>
                                                         <button className='bg-successColor w-14 h-8 rounded-sm' onClick={() => editUser(user)}>Edit</button>
                                                     </td>

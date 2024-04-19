@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, InputField } from '../../components/Shared';
+import { Button, InputField, OutlinedButton } from '../../components/Shared';
 import Layout from '../../utils/Layout';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
 
@@ -68,7 +68,7 @@ const AddUser = () => {
 
     //handel the edit user functionality
     useEffect(() => {
-        const getUser = JSON.parse(localStorage.getItem("user"));
+        const getUser = JSON.parse(localStorage.getItem("users"));
         if (getUser) {
             getUser.map((user) => {
                 if (user.id == id) {
@@ -164,10 +164,8 @@ const AddUser = () => {
             });
 
             const updateUser = JSON.stringify(newData);
-            localStorage.setItem("user", updateUser);
-
+            localStorage.setItem("users", updateUser);
             navigate("/user-listing")
-
             return newData;
 
         })
@@ -194,6 +192,10 @@ const AddUser = () => {
             }
         })
     }
+    // listing button functionality
+    const UserListing = () => {
+        navigate("/user-listing")
+    }
 
     return (
         <Layout>
@@ -201,12 +203,44 @@ const AddUser = () => {
                 ?
                 <div className='w-full flex flex-col justify-center items-center'>
                     <div className='w-full lg:w-1/2 '>
-                        <div className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center py-5'>
+                        <div className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center pb-5'>
                             {
                                 buttonChanged ?
-                                    <h1 className='text-primaryColor text-3xl font-bold pb-8'>Update User</h1>
+                                    <div className='w-full  flex justify-between  px-5 py-5'>
+                                        <div>
+                                            <OutlinedButton
+                                                name="Listing"
+                                                onClick={UserListing}
+                                            />
+                                        </div>
+                                        <div className='text-center'>
+                                            <h1 className='text-primaryColor text-3xl font-bold'>Update User</h1>
+                                        </div>
+                                        <div>
+                                            <Button
+                                                name="Log out"
+                                                onClick={handelLogOut}
+                                            />
+                                        </div>
+                                    </div>
                                     :
-                                    <h1 className='text-primaryColor text-3xl font-bold pb-8'>Add User</h1>
+                                    <div className='w-full flex justify-between px-5 py-5 border-b-2 border-outlineColor'>
+                                        <div>
+                                            <OutlinedButton
+                                                name="Listing"
+                                                onClick={UserListing}
+                                            />
+                                        </div>
+                                        <div className='text-center'>
+                                            <h1 className='text-primaryColor text-2xl font-bold'>Add User</h1>
+                                        </div>
+                                        <div>
+                                            <Button
+                                                name="Log out"
+                                                onClick={handelLogOut}
+                                            />
+                                        </div>
+                                    </div>
                             }
                             <div className='flex flex-col items-center'>
                                 <InputField
@@ -335,10 +369,7 @@ const AddUser = () => {
                                             onClick={handelSubmit}
                                         />
                                 }
-                                <Button
-                                    name="Log out"
-                                    onClick={handelLogOut}
-                                />
+
                             </div>
                         </div>
                     </div>
