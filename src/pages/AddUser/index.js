@@ -362,7 +362,8 @@ const AddUser = () => {
                                         <Button
                                             name="Update User"
                                             onClick={updateUser}
-                                            smWidth="16"
+                                            smWidth="24"
+                                            mdWidth="24"
                                         />
                                         :
                                         <Button

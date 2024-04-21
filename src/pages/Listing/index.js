@@ -59,7 +59,7 @@ const Listing = () => {
         navigate(`/update-user/${user.id}`);
     }
 
-    //handel logout functionality on button cliked 
+    //handel logout functionality on button clicked 
     const handelLogOut = () => {
         const getUser = JSON.parse(localStorage.getItem("loginUser"));
         getUser.map((user) => {
