@@ -151,22 +151,29 @@ const Login = () => {
                                         onChange={handelChange}
                                         error={error.username}
                                     />
-                                    <InputField
-                                        name="password"
-                                        type={passwordIcon ? `text` : `password`}
-                                        placeholder="password"
-                                        value={loginUser.password}
-                                        onChange={handelChange}
-                                        error={error.password}
-                                    />
-                                    {
-                                        passwordIcon
-                                            ?
-                                            <button type="button" className="" onClick={hidePassword}><img src={images.eye} alt="" className={`h-5 w-5 absolute ${error.password ? 'top-[7rem] left-48' : 'top-[5.7rem] left-48'} ${error.password ? 'sm:top-[7.8rem] sm:left-64' : 'sm:top-[6.5rem] sm:left-64'}`} /></button>
-                                            :
-                                            <button type="button" className="" onClick={showPassword}><img src={images.eyeSlash} alt="" className={`h-5 w-5 absolute ${error.password ? 'top-[7rem] left-48' : 'top-[5.7rem] left-48'}  ${error.password ? 'sm:top-[7.8rem] sm:left-64' : 'sm:top-[6.5rem] sm:left-64'}`} /></button>
-                                    }
 
+                                    <div className="relative flex flex-col">
+                                        <InputField
+                                            name="password"
+                                            type={passwordIcon ? `text` : `password`}
+                                            placeholder="password"
+                                            value={loginUser.password}
+                                            onChange={handelChange}
+                                            error={error.password}
+                                        />
+                                        {
+                                            passwordIcon
+                                                ?
+                                                <div className="absolute left-48 top-8 sm:left-64 sm:top-9">
+                                                    <button type="button" className="" onClick={hidePassword}><img src={images.eye} alt="" className="h-4 sm:h-5 w-4 sm:w-5" /></button>
+                                                </div>
+                                                :
+                                                <div className="absolute left-48 top-8 sm:left-64 sm:top-9">
+                                                    <button type="button" className="" onClick={showPassword}><img src={images.eyeSlash} alt="" className="w-4 sm:w-5 h-5 sm:h-5" /></button>
+                                                </div>
+                                        }
+
+                                    </div>
                                 </form>
                             </div>
                             <div className="mt-10 mb-3">
