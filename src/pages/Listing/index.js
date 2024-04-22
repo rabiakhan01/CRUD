@@ -3,10 +3,22 @@ import { useState } from "react";
 import Layout from "../../utils/Layout";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button, OutlinedButton } from "../../components/Shared";
-import { isLoginUser, getUser } from "../../utils/utils";
+import { isLoginUser } from "../../utils/utils";
 const Listing = () => {
 
     const navigate = useNavigate();
+
+    //get the user from the local storage and return empty array if key not exists
+    const getUser = () => {
+        const user = localStorage.getItem("users");
+        if (user) {
+            return JSON.parse(user);
+        }
+        else {
+            return [];
+        }
+    }
+
 
     //set the array of users
     const [userData, setUserData] = useState(getUser());
