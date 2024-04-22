@@ -3,34 +3,18 @@ import { Button, InputField, OutlinedButton } from "../../components/Shared";
 import Layout from "../../utils/Layout";
 import { Navigate, useNavigate } from "react-router-dom";
 import images from "../../assets/images";
+import { isLoginUser } from "../../utils/utils";
 const Login = () => {
 
     //hook used for navigation from one page to another
     const navigate = useNavigate();
 
     //check if user already logged in
-    const isLoginUser = () => {
-
-        const getUser = JSON.parse(localStorage.getItem("loginUser"));
-        if (getUser) {
-            const user = getUser.find(user => user.isLogin === true);
-            if (user) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            return true;
-        }
-
-    }
 
     const [isLoggedIn, setisLoggedIn] = useState(isLoginUser());
     //handel state of input fields of login screen
     const [loginUser, setLoginUser] = useState({
-        username: '',
+        email: '',
         password: ''
     });
 
@@ -42,7 +26,7 @@ const Login = () => {
 
     //handel the empty input fields errors
     const [error, setError] = useState({
-        username: "",
+        email: "",
         password: ""
     })
 
@@ -74,7 +58,7 @@ const Login = () => {
             getUser.map((user) => {
 
                 //if the users matches the cred then navigate to the Listing page
-                if (user.username === loginUser.username && user.password === loginUser.password) {
+                if (user.email === loginUser.email && user.password === loginUser.password) {
                     user.isLogin = true;
                     const setUser = JSON.stringify(getUser);
                     console.log("getUser", setUser)
@@ -84,13 +68,13 @@ const Login = () => {
 
                 // activate validations  
                 else {
-                    if (loginUser.username !== "" && loginUser.password !== "") {
+                    if (loginUser.email !== "" && loginUser.password !== "") {
                         setValidationError(true);
-                        setValidationMessage("Please enter a valid username and password");
+                        setValidationMessage("Please enter a valid email and password");
                     }
                     else {
-                        if (loginUser.username === '') {
-                            setError((prevError) => ({ ...prevError, username: "username required" }))
+                        if (loginUser.email === '') {
+                            setError((prevError) => ({ ...prevError, email: "email required" }))
                         }
                         if (loginUser.password === '') {
                             setError((prevError) => ({ ...prevError, password: "password required" }))
@@ -101,17 +85,17 @@ const Login = () => {
         }
         //handel if no user exists 
         else {
-            if (loginUser.username !== "" && loginUser.password !== "") {
+            if (loginUser.email !== "" && loginUser.password !== "") {
                 setValidationError(true);
                 setValidationMessage("Account not exists please first create an account");
                 setLoginUser({
-                    username: "",
+                    email: "",
                     password: ""
                 })
             }
             else {
-                if (loginUser.username === '') {
-                    setError((prevError) => ({ ...prevError, username: "username required" }))
+                if (loginUser.email === '') {
+                    setError((prevError) => ({ ...prevError, email: "email required" }))
                 }
                 if (loginUser.password === '') {
                     setError((prevError) => ({ ...prevError, password: "password required" }))
@@ -144,28 +128,34 @@ const Login = () => {
                             <div>
                                 <form className="relative flex flex-col">
                                     <InputField
-                                        name="username"
+                                        name="email"
                                         type="text"
-                                        placeholder="Username"
-                                        value={loginUser.username}
+                                        placeholder="email"
+                                        value={loginUser.email}
                                         onChange={handelChange}
-                                        error={error.username}
+                                        error={error.email}
                                     />
-                                    <InputField
-                                        name="password"
-                                        type={passwordIcon ? `text` : `password`}
-                                        placeholder="password"
-                                        value={loginUser.password}
-                                        onChange={handelChange}
-                                        error={error.password}
-                                    />
-                                    {
-                                        passwordIcon
-                                            ?
-                                            <button type="button" className="" onClick={hidePassword}><img src={images.eye} alt="" className={`h-5 w-5 absolute ${error.password ? 'top-[7rem] left-48' : 'top-[5.7rem] left-48'} ${error.password ? 'sm:top-[7.8rem] sm:left-64' : 'sm:top-[6.5rem] sm:left-64'}`} /></button>
-                                            :
-                                            <button type="button" className="" onClick={showPassword}><img src={images.eyeSlash} alt="" className={`h-5 w-5 absolute ${error.password ? 'top-[7rem] left-48' : 'top-[5.7rem] left-48'}  ${error.password ? 'sm:top-[7.8rem] sm:left-64' : 'sm:top-[6.5rem] sm:left-64'}`} /></button>
-                                    }
+                                    <div className="relative flex flex-col">
+                                        <InputField
+                                            name="password"
+                                            type={passwordIcon ? `text` : `password`}
+                                            placeholder="password"
+                                            value={loginUser.password}
+                                            onChange={handelChange}
+                                            error={error.password}
+                                        />
+                                        {
+                                            passwordIcon
+                                                ?
+                                                <div className="absolute top-9 left-64">
+                                                    <button type="button" className="" onClick={hidePassword}><img src={images.eye} alt="" className="h-5 w-5" /></button>
+                                                </div>
+                                                :
+                                                <div className="absolute top-9 left-64">
+                                                    <button type="button" className="" onClick={showPassword}><img src={images.eyeSlash} alt="" className="h-5 w-5" /></button>
+                                                </div>
+                                        }
+                                    </div>
 
                                 </form>
                             </div>

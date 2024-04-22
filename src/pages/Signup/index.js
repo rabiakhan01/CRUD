@@ -2,37 +2,10 @@ import React, { useState } from "react";
 import { InputField, Button, OutlinedButton } from "../../components/Shared";
 import Layout from "../../utils/Layout";
 import { Navigate, useNavigate } from "react-router-dom";
+import { isLoginUser, getUser } from "../../utils/utils";
 
 const SignUp = () => {
 
-    // get the user from local host
-    const getUser = () => {
-        const user = localStorage.getItem("loginUser");
-        if (user) {
-            return JSON.parse(user);
-        }
-        else {
-            return [];
-        }
-    }
-
-    const isLoginUser = () => {
-
-        const getUser = JSON.parse(localStorage.getItem("loginUser"));
-        if (getUser) {
-            const user = getUser.find(user => user.isLogin === true);
-            if (user) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            return true;
-        }
-
-    }
     // state to set the users detail
     const [signUpUser, setSignUpUser] = useState(getUser());
     const [signUpData, setSignUpData] = useState({
@@ -72,6 +45,13 @@ const SignUp = () => {
         setErrorMessage(false);
     }
 
+    const setNewUser = () => {
+        const updateData = [...signUpUser, signUpData];
+        setSignUpUser(updateData);
+        const setUser = JSON.stringify(updateData);
+        localStorage.setItem("loginUser", setUser);
+        navigate("/login");
+    }
     //handel the submitted data from the form 
 
     const handelSubmit = (event) => {
@@ -92,25 +72,23 @@ const SignUp = () => {
 
         if (signUpData.username !== '' && signUpData.email !== '' && signUpData.password !== '') {
 
-            const updateData = [...signUpUser, signUpData];
-            setSignUpUser(updateData);
 
-            const newArray = signUpUser.find(user => user.username === signUpData.username || user.password === signUpData.password);
+
+            const newArray = signUpUser.find(user => user.email === signUpData.email);
+
+            console.log(newArray);
             if (signUpUser.length > 0) {
                 if (newArray) {
                     setExistUser(true);
-                    setErrorMessage("user exists choose another username or password");
+                    setErrorMessage("user exists choose another email");
+                    console.log("user exists");
                 }
                 else {
-                    const setUser = JSON.stringify(updateData);
-                    localStorage.setItem("loginUser", setUser);
-                    navigate("/login");
+                    setNewUser();
                 }
             }
             else {
-                const setUser = JSON.stringify(updateData);
-                localStorage.setItem("loginUser", setUser);
-                navigate("/login");
+                setNewUser();
             }
         }
 

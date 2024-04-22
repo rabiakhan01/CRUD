@@ -2,41 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Button, InputField, OutlinedButton } from '../../components/Shared';
 import Layout from '../../utils/Layout';
 import { useParams, useNavigate, Navigate } from 'react-router-dom';
-
+import { isLoginUser, getUser } from '../../utils/utils';
 const AddUser = () => {
 
     const { id } = useParams();
     const navigate = useNavigate();
-
-    // get data from local storage for checking if user exists or not
-    const getUser = () => {
-        const user = localStorage.getItem("users");
-        if (user) {
-            return JSON.parse(user);
-        }
-        else {
-            return [];
-        }
-    }
-
-    //check if user login 
-    const isLoginUser = () => {
-
-        const getUser = JSON.parse(localStorage.getItem("loginUser"));
-        if (getUser) {
-            const user = getUser.find(user => user.isLogin === true);
-            if (user) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
-
-    }
 
     //set the array of users 
     const [userData, setUserData] = useState(getUser())
