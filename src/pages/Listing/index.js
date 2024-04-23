@@ -8,9 +8,9 @@ const Listing = () => {
 
 
     const loginUsers = JSON.parse(localStorage.getItem("loginUser"));
-    const loggedInUser = loginUsers.find(user => user.isLogin === true)
+    const loggedInUser = loginUsers.find(user => user.isLogin)
 
-    console.log(loggedInUser)
+    console.log("loggedIn", loggedInUser)
 
     const { state } = useLocation();
     const navigate = useNavigate();
