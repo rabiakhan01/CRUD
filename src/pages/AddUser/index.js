@@ -192,7 +192,7 @@ const AddUser = () => {
                                         />
                                     </div>
                                     <div className='text-center'>
-                                        <h1 className='text-primaryColor text-3xl font-bold'>Update Student</h1>
+                                        <h1 className='text-primaryColor text-2xl font-bold'>Update Student</h1>
                                     </div>
                                     <div>
                                         <Button
@@ -338,7 +338,7 @@ const AddUser = () => {
                             {
                                 buttonChanged ?
                                     <Button
-                                        name="Update User"
+                                        name="Update Student"
                                         onClick={updateUser}
                                         smWidth="24"
                                         mdWidth="24"
