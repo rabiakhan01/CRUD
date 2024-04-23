@@ -92,25 +92,26 @@ const SignUp = () => {
 
         if (signUpData.username !== '' && signUpData.email !== '' && signUpData.password !== '') {
 
-            const updateData = [...signUpUser, signUpData];
-            setSignUpUser(updateData);
-
-            const newArray = signUpUser.find(user => user.username === signUpData.username || user.password === signUpData.password);
+            const newArray = signUpUser.find(user => user.email === signUpData.email);
             if (signUpUser.length > 0) {
                 if (newArray) {
                     setExistUser(true);
                     setErrorMessage("user exists choose another username or password");
                 }
                 else {
+                    const updateData = [...signUpUser, signUpData];
+                    setSignUpUser(updateData);
                     const setUser = JSON.stringify(updateData);
                     localStorage.setItem("loginUser", setUser);
-                    navigate("/login");
+                    navigate("/");
                 }
             }
             else {
+                const updateData = [...signUpUser, signUpData];
+                setSignUpUser(updateData);
                 const setUser = JSON.stringify(updateData);
                 localStorage.setItem("loginUser", setUser);
-                navigate("/login");
+                navigate("/");
             }
         }
 
@@ -123,67 +124,62 @@ const SignUp = () => {
     }
 
     const handelAccount = () => {
-        navigate("/login");
+        navigate("/");
     }
     return (
         <Layout>
-            {
-                isLoggedIn
-                    ?
-                    <div className="flex justify-center items-center h-lvh">
-                        <div className="flex flex-col w-11/12 sm:w-auto justify-center items-center outline outline-1 outline-outlineColor m-5 p-10  sm:px-28 sm:py-16">
-                            {existUser && <span className="text-base font-medium text-errorColor">{errorMessage}</span>}
-                            <div>
-                                <h1 className="text-primaryColor text-2xl sm:text-3xl font-bold pb-8 text-nowrap">Signup</h1>
-                            </div>
-                            <div>
-                                <form className="flex flex-col">
-                                    <InputField
-                                        name="username"
-                                        type="text"
-                                        placeholder="Username"
-                                        value={signUpData.username}
-                                        onChange={handelChange}
-                                        error={error.username}
-
-                                    />
-                                    <InputField
-                                        name="email"
-                                        type="email"
-                                        placeholder="email"
-                                        value={signUpData.email}
-                                        onChange={handelChange}
-                                        error={error.email}
-                                    />
-                                    <InputField
-                                        name="password"
-                                        type="password"
-                                        placeholder="password"
-                                        value={signUpData.password}
-                                        onChange={handelChange}
-                                        error={error.password}
-                                    />
-                                </form>
-                            </div>
-                            <div className="mt-10 mb-3">
-                                <Button
-                                    name="Register"
-                                    onClick={handelSubmit}
-                                    smWidth="56"
-                                    mdWidth="sm:w-72"
-                                />
-                            </div>
-                            <OutlinedButton
-                                name="Already Have Account"
-                                onClick={handelAccount}
-                                smWidth="56"
-                                mdWidth="sm:w-72"
-                            />
-                        </div>
+            <div className="flex justify-center items-center h-lvh">
+                <div className="flex flex-col w-11/12 sm:w-auto justify-center items-center outline outline-1 outline-outlineColor m-5 p-10  sm:px-28 sm:py-16">
+                    {existUser && <span className="text-base font-medium text-errorColor">{errorMessage}</span>}
+                    <div>
+                        <h1 className="text-primaryColor text-2xl sm:text-3xl font-bold pb-8 text-nowrap">Signup</h1>
                     </div>
-                    :
-                    <Navigate to="/user-listing" />
-            }
+                    <div>
+                        <form className="flex flex-col">
+                            <InputField
+                                name="username"
+                                type="text"
+                                placeholder="Username"
+                                value={signUpData.username}
+                                onChange={handelChange}
+                                error={error.username}
+
+                            />
+                            <InputField
+                                name="email"
+                                type="email"
+                                placeholder="email"
+                                value={signUpData.email}
+                                onChange={handelChange}
+                                error={error.email}
+                            />
+                            <InputField
+                                name="password"
+                                type="password"
+                                placeholder="password"
+                                value={signUpData.password}
+                                onChange={handelChange}
+                                error={error.password}
+                            />
+                        </form>
+                    </div>
+                    <div className="mt-10 mb-3">
+                        <Button
+                            name="Register"
+                            onClick={handelSubmit}
+                            smWidth="56"
+                            mdWidth="sm:w-72"
+                        />
+                    </div>
+                    <OutlinedButton
+                        name="Already Have Account"
+                        onClick={handelAccount}
+                        smWidth="56"
+                        mdWidth="sm:w-72"
+                    />
+                </div>
+            </div>
+
         </Layout>
     );
 }
