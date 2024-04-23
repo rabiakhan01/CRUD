@@ -92,22 +92,23 @@ const SignUp = () => {
 
         if (signUpData.username !== '' && signUpData.email !== '' && signUpData.password !== '') {
 
-            const updateData = [...signUpUser, signUpData];
-            setSignUpUser(updateData);
-
-            const newArray = signUpUser.find(user => user.username === signUpData.username || user.password === signUpData.password);
+            const newArray = signUpUser.find(user => user.email === signUpData.email);
             if (signUpUser.length > 0) {
                 if (newArray) {
                     setExistUser(true);
                     setErrorMessage("user exists choose another username or password");
                 }
                 else {
+                    const updateData = [...signUpUser, signUpData];
+                    setSignUpUser(updateData);
                     const setUser = JSON.stringify(updateData);
                     localStorage.setItem("loginUser", setUser);
                     navigate("/login");
                 }
             }
             else {
+                const updateData = [...signUpUser, signUpData];
+                setSignUpUser(updateData);
                 const setUser = JSON.stringify(updateData);
                 localStorage.setItem("loginUser", setUser);
                 navigate("/login");

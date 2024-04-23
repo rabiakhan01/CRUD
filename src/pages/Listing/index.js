@@ -3,40 +3,10 @@ import { useState } from "react";
 import Layout from "../../utils/Layout";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button, OutlinedButton } from "../../components/Shared";
-
+import { isLoginUser, getUser } from "../../utils/utils";
 const Listing = () => {
 
     const navigate = useNavigate();
-
-    //get the user from the local storage and return empty array if key not exists
-    const getUser = () => {
-        const user = localStorage.getItem("users");
-        if (user) {
-            return JSON.parse(user);
-        }
-        else {
-            return [];
-        }
-    }
-
-    //check if user logged in
-    const isLoginUser = () => {
-
-        const getUser = JSON.parse(localStorage.getItem("loginUser"));
-        if (getUser) {
-            const user = getUser.find(user => user.isLogin === true);
-            if (user) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return false;
-        }
-
-    }
 
     //set the array of users
     const [userData, setUserData] = useState(getUser());
@@ -117,7 +87,7 @@ const Listing = () => {
                                     {
                                         userData.map((user, index) => {
                                             return (
-                                                <tr key={index} className='py-2'>
+                                                <tr key={index} className='py-2 text-center'>
                                                     <td className='border border-primaryColor px-6 text-nowrap'>{index + 1}</td>
                                                     <td className='border border-primaryColor px-6 text-nowrap'>{user.username}</td>
                                                     <td className='border border-primaryColor px-6 text-nowrap'>{user.email}</td>
