@@ -15,9 +15,9 @@ function App() {
         <Route path='/' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/add-new-user' element={<AddUser />} />
-        <Route path='/user-listing' element={<Listing />} />
-        <Route path='/update-user/:id' element={<AddUser />} />
+        <Route path='/add-new-student' element={<AddUser />} />
+        <Route path='/student-listing' element={<Listing />} />
+        <Route path='/update-student/:id' element={<AddUser />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
