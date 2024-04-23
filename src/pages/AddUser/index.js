@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, InputField, OutlinedButton } from '../../components/Shared';
 import Layout from '../../utils/Layout';
-import { useParams, useNavigate, Navigate } from 'react-router-dom';
-import { isLoginUser } from '../../utils/utils';
+import { useParams, useNavigate } from 'react-router-dom';
+
 const AddUser = () => {
 
     const { id } = useParams();
@@ -19,7 +19,6 @@ const AddUser = () => {
         }
     }
 
-    //check if user login 
 
     //set the array of users 
     const [userData, setUserData] = useState(getUser())
@@ -35,6 +34,7 @@ const AddUser = () => {
     //set user input
     const [formData, setFormData] = useState({
         id: null,
+        parentId: '',
         username: '',
         email: '',
         age: '',
@@ -62,7 +62,6 @@ const AddUser = () => {
     //handel the user input
     const handelChange = (event) => {
 
-
         const { name, value, checked } = event.target;
 
         if (name === "languages") {
@@ -81,8 +80,11 @@ const AddUser = () => {
             }
         }
         else {
+            const getUser = JSON.parse(localStorage.getItem("loginUser"));
+            const loggedInUser = getUser.find(user => user.isLogin === true)
             setFormData({
                 ...formData,
+                parentId: loggedInUser.id,
                 id: Math.floor(Math.random() * 100),
                 [name]: value,
             });
