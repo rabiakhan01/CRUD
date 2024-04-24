@@ -2,19 +2,19 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Layout from "../../utils/Layout";
 import { useNavigate } from "react-router-dom";
-import { Button, OutlinedButton } from "../../components/Shared";
+import { Button, Modal, OutlinedButton, PrimaryButton, SecondaryButton } from "../../components/Shared";
 import { getUser } from "../../utils/utils";
+
 const Listing = () => {
 
+    const navigate = useNavigate();
     const loginUsers = JSON.parse(localStorage.getItem("loginUser"));
     const loggedInUser = loginUsers.find(user => user.isLogin)
-
-    const navigate = useNavigate();
-
-
     //set the array of users
     const [userData, setUserData] = useState(getUser());
     const [rows, setRows] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+
 
     // delete the user on delete button's click
     const deleteUser = (index) => {
@@ -49,6 +49,11 @@ const Listing = () => {
         navigate("/add-new-student")
     }
 
+    //handel modal for delete user
+
+    const handelDeleteModal = () => {
+        setShowModal(true);
+    }
     useEffect(() => {
 
         setRows(() => {
@@ -67,7 +72,7 @@ const Listing = () => {
 
     return (
         <Layout>
-            <div className='w-full'>
+            <div className={`w-full ${showModal ? 'blur-sm' : 'blur-none'}`}>
                 <div className="flex float-left">
                     <OutlinedButton
                         name="Add Student"
@@ -110,8 +115,15 @@ const Listing = () => {
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.address}</td>
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
                                             <td className='flex justify-center items-center gap-2  px-6 text-textColor border border-primaryColor'>
-                                                <button className='bg-successColor w-14 h-8 rounded-sm' onClick={() => editUser(user)}>Edit</button>
-                                                <button className='bg-dangerColor w-14 h-8 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>                                                </td>
+                                                <SecondaryButton
+                                                    btn_name="Edit"
+                                                    onClick={() => { editUser(user) }}
+                                                />
+                                                <PrimaryButton
+                                                    btn_name="Delete"
+                                                    onClick={handelDeleteModal}
+                                                />
+                                            </td>
                                         </tr>
                                     )
                                 })
@@ -124,11 +136,14 @@ const Listing = () => {
                             }
                         </tbody>
                     </table>
-
-
                 </div>
-
             </div>
+            {
+                showModal &&
+                <div className="w-full flex justify-center items-center">
+                    <Modal />
+                </div>
+            }
         </Layout>
     );
 }
