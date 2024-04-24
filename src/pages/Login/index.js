@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { Button, InputField, OutlinedButton } from "../../components/Shared";
 import Layout from "../../utils/Layout";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import images from "../../assets/images";
-import { isLoginUser } from "../../utils/utils";
 
 const Login = () => {
 
     //hook used for navigation from one page to another
     const navigate = useNavigate();
-    const [isLoggedIn, setisLoggedIn] = useState(isLoginUser());
+
     //handel state of input fields of login screen
     const [loginUser, setLoginUser] = useState({
         email: '',
@@ -85,10 +84,6 @@ const Login = () => {
             if (loginUser.email !== "" && loginUser.password !== "") {
                 setValidationError(true);
                 setValidationMessage("Account not exists please first create an account");
-                setLoginUser({
-                    email: "",
-                    password: ""
-                })
             }
             else {
                 if (loginUser.email === '') {

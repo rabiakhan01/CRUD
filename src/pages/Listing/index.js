@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import Layout from "../../utils/Layout";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, OutlinedButton } from "../../components/Shared";
 import { getUser } from "../../utils/utils";
 const Listing = () => {
@@ -10,14 +10,14 @@ const Listing = () => {
     const loginUsers = JSON.parse(localStorage.getItem("loginUser"));
     const loggedInUser = loginUsers.find(user => user.isLogin)
 
-    console.log("loggedIn", loggedInUser)
 
-    const { state } = useLocation();
+
     const navigate = useNavigate();
-    console.log("id", state)
+
 
     //set the array of users
     const [userData, setUserData] = useState(getUser());
+    const [rows, setRows] = useState();
 
     // delete the user on delete button's click
     const deleteUser = (index) => {
@@ -52,7 +52,10 @@ const Listing = () => {
         navigate("/add-new-student")
     }
 
-
+    useEffect(() => {
+        const rowCount = document.getElementById('table').rows.length;
+        setRows(rowCount);
+    }, [])
     return (
         <Layout>
             <div className='w-full'>
@@ -74,7 +77,7 @@ const Listing = () => {
                     <h1 className='text-primaryColor text-xl sm:text-2xl md:text-3xl font-bold pb-8 text-nowrap'>Student Listing</h1>
                 </div>
                 <div className='flex flex-col relative overflow-x-auto'>
-                    <table className="table-fixed border border-primaryColor">
+                    <table className="table-fixed border border-primaryColor" id="table">
                         <thead className='bg-primaryColor'>
                             <tr className='text-textColor text-medium text-sm sm:text-base'>
                                 <th className='px-6 py-2'>Sr#</th>
@@ -99,9 +102,8 @@ const Listing = () => {
                                                 <td className='border border-primaryColor px-6 text-nowrap'>{user.address}</td>
                                                 <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
                                                 <td className='flex justify-center items-center gap-2  px-6 text-textColor border border-primaryColor'>
-                                                    <button className='bg-dangerColor w-14 h-8 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>
                                                     <button className='bg-successColor w-14 h-8 rounded-sm' onClick={() => editUser(user)}>Edit</button>
-                                                </td>
+                                                    <button className='bg-dangerColor w-14 h-8 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>                                                </td>
                                             </tr>
                                         )
                                     }
@@ -110,7 +112,7 @@ const Listing = () => {
                         </tbody>
                     </table>
                     {
-                        userData.length < 1 && <span className="text-xl text-center font-bold text-primaryColor pt-96">No Record</span>
+                        rows < 2 && <span className="text-xl text-center font-bold text-primaryColor pt-96">No Record</span>
                     }
                 </div>
 

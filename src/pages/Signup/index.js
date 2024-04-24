@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { InputField, Button, OutlinedButton } from "../../components/Shared";
 import Layout from "../../utils/Layout";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
 
@@ -15,24 +15,6 @@ const SignUp = () => {
             return [];
         }
     }
-
-    const isLoginUser = () => {
-
-        const getUser = JSON.parse(localStorage.getItem("loginUser"));
-        if (getUser) {
-            const user = getUser.find(user => user.isLogin === true);
-            if (user) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            return true;
-        }
-
-    }
     // state to set the users detail
     const [signUpUser, setSignUpUser] = useState(getUser());
     const [signUpData, setSignUpData] = useState({
@@ -43,8 +25,6 @@ const SignUp = () => {
         isLogin: false
     });
     const [existUser, setExistUser] = useState(false);
-    // check if user login than sign up page should not be accessed until the user logout
-    const [isLoggedIn, setisLoggedIn] = useState(isLoginUser());
 
     //validation errors
     const [error, setError] = useState({
@@ -96,7 +76,7 @@ const SignUp = () => {
             if (signUpUser.length > 0) {
                 if (newArray) {
                     setExistUser(true);
-                    setErrorMessage("user exists choose another username or password");
+                    setErrorMessage("user exists choose another email");
                 }
                 else {
                     const updateData = [...signUpUser, signUpData];
@@ -115,12 +95,6 @@ const SignUp = () => {
             }
         }
 
-        // set the input field empty after the values are submitted
-        setSignUpData({
-            username: "",
-            email: "",
-            password: ""
-        });
     }
 
     const handelAccount = () => {
