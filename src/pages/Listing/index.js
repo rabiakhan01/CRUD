@@ -6,18 +6,15 @@ import { Button, OutlinedButton } from "../../components/Shared";
 import { getUser } from "../../utils/utils";
 const Listing = () => {
 
-
     const loginUsers = JSON.parse(localStorage.getItem("loginUser"));
     const loggedInUser = loginUsers.find(user => user.isLogin)
-
-
 
     const navigate = useNavigate();
 
 
     //set the array of users
     const [userData, setUserData] = useState(getUser());
-    const [rows, setRows] = useState();
+    const [rows, setRows] = useState([]);
 
     // delete the user on delete button's click
     const deleteUser = (index) => {
@@ -53,9 +50,21 @@ const Listing = () => {
     }
 
     useEffect(() => {
-        const rowCount = document.getElementById('table').rows.length;
-        setRows(rowCount);
-    }, [])
+
+        setRows(() => {
+            if (userData?.length > 0) {
+                return userData?.filter((user) => {
+                    if (user.parentId == loggedInUser.id) {
+                        return user
+                    }
+                })
+            } else {
+                return []
+            }
+
+        })
+    }, [userData])
+
     return (
         <Layout>
             <div className='w-full'>
@@ -63,7 +72,7 @@ const Listing = () => {
                     <OutlinedButton
                         name="Add Student"
                         onClick={handelAddUser}
-                        mdWidth="28"
+                        mdWidth="sm:w-28"
                     />
                 </div>
                 <div className="flex gap-5 float-right">
@@ -74,7 +83,7 @@ const Listing = () => {
                     />
                 </div>
                 <div className='mt-20 text-center'>
-                    <h1 className='text-primaryColor text-xl sm:text-2xl md:text-3xl font-bold pb-8 text-nowrap'>Student Listing</h1>
+                    <h1 className='text-primaryColor text-xl sm:text-2xl font-bold pb-8'>Student Listing</h1>
                 </div>
                 <div className='flex flex-col relative overflow-x-auto'>
                     <table className="table-fixed border border-primaryColor" id="table">
@@ -91,29 +100,32 @@ const Listing = () => {
                         </thead>
                         <tbody>
                             {
-                                userData.map((user, index) => {
-                                    if (user.parentId === loggedInUser.id) {
-                                        return (
-                                            <tr key={index} className='py-2 text-center'>
-                                                <td className='border border-primaryColor px-6 text-nowrap'>{index + 1}</td>
-                                                <td className='border border-primaryColor px-6 text-nowrap'>{user.username}</td>
-                                                <td className='border border-primaryColor px-6 text-nowrap'>{user.email}</td>
-                                                <td className='border border-primaryColor px-6 text-nowrap'>{user.age}</td>
-                                                <td className='border border-primaryColor px-6 text-nowrap'>{user.address}</td>
-                                                <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
-                                                <td className='flex justify-center items-center gap-2  px-6 text-textColor border border-primaryColor'>
-                                                    <button className='bg-successColor w-14 h-8 rounded-sm' onClick={() => editUser(user)}>Edit</button>
-                                                    <button className='bg-dangerColor w-14 h-8 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>                                                </td>
-                                            </tr>
-                                        )
-                                    }
+                                rows.length > 0 ? rows.map((user, index) => {
+                                    return (
+                                        <tr key={index} className='py-2 text-center'>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{index + 1}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.username}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.email}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.age}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.address}</td>
+                                            <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
+                                            <td className='flex justify-center items-center gap-2  px-6 text-textColor border border-primaryColor'>
+                                                <button className='bg-successColor w-14 h-8 rounded-sm' onClick={() => editUser(user)}>Edit</button>
+                                                <button className='bg-dangerColor w-14 h-8 rounded-sm' onClick={() => deleteUser(index)}>Delete</button>                                                </td>
+                                        </tr>
+                                    )
                                 })
+                                    :
+                                    <tr>
+                                        <td colSpan={7} className="text-center py-8">
+                                            <span className="text-xl sm:text-2xl text-primaryColor font-bold">No Record</span>
+                                        </td>
+                                    </tr>
                             }
                         </tbody>
                     </table>
-                    {
-                        rows < 2 && <span className="text-xl text-center font-bold text-primaryColor pt-96">No Record</span>
-                    }
+
+
                 </div>
 
             </div>

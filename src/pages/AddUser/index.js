@@ -194,7 +194,7 @@ const AddUser = () => {
                                         />
                                     </div>
                                     <div className='text-center'>
-                                        <h1 className='text-primaryColor text-2xl font-bold'>Update Student</h1>
+                                        <h1 className='text-primaryColor text-xl sm:text-2xl font-bold'>Update Student</h1>
                                     </div>
                                     <div>
                                         <Button
@@ -212,7 +212,7 @@ const AddUser = () => {
                                         />
                                     </div>
                                     <div className='text-center'>
-                                        <h1 className='text-primaryColor text-2xl font-bold'>Add Student</h1>
+                                        <h1 className='text-primaryColor text-xl sm:text-2xl font-bold'>Add Student</h1>
                                     </div>
                                     <div>
                                         <Button
@@ -258,7 +258,7 @@ const AddUser = () => {
                                 error={error.address}
                             />
                         </div>
-                        <div className='flex flex-col gap-1 w-72'>
+                        <div className='flex flex-col gap-1 w-56 sm:w-72'>
                             <div>
                                 <label>Gender</label>
                             </div>
@@ -291,7 +291,7 @@ const AddUser = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-1 w-72'>
+                        <div className='flex flex-col gap-1 w-56 sm:w-72'>
                             <div>
                                 <label>
                                     Favourit Languages
