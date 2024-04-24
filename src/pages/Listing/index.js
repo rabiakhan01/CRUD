@@ -4,6 +4,7 @@ import Layout from "../../utils/Layout";
 import { useNavigate } from "react-router-dom";
 import { Button, Modal, OutlinedButton, PrimaryButton, SecondaryButton } from "../../components/Shared";
 import { getUser } from "../../utils/utils";
+import images from "../../assets/images";
 
 const Listing = () => {
 
@@ -14,16 +15,16 @@ const Listing = () => {
     const [userData, setUserData] = useState(getUser());
     const [rows, setRows] = useState([]);
     const [showModal, setShowModal] = useState(false);
-
-
+    const [deleteIndex, setdeleteIndex] = useState();
     // delete the user on delete button's click
-    const deleteUser = (index) => {
-        userData.splice(index, 1);
+    const deleteUser = () => {
+        userData.splice(deleteIndex, 1);
         const updateData = userData;
         const setUser = JSON.stringify(updateData);
         localStorage.setItem("users", setUser);
 
         setUserData([...updateData]);
+        setShowModal(false);
 
     }
     // navigate to the form where we populate data of the user clicked for editing
@@ -51,9 +52,15 @@ const Listing = () => {
 
     //handel modal for delete user
 
-    const handelDeleteModal = () => {
+    const handelDeleteModal = (index) => {
+        setdeleteIndex(index);
         setShowModal(true);
     }
+
+    const removeModal = () => {
+        setShowModal(false);
+    }
+
     useEffect(() => {
 
         setRows(() => {
@@ -70,9 +77,10 @@ const Listing = () => {
         })
     }, [userData])
 
+
     return (
         <Layout>
-            <div className={`w-full ${showModal ? 'blur-sm' : 'blur-none'}`}>
+            <div className={`w-full ${showModal ? 'blur-[1px]' : 'blur-none'}`}>
                 <div className="flex float-left">
                     <OutlinedButton
                         name="Add Student"
@@ -114,14 +122,15 @@ const Listing = () => {
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.age}</td>
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.address}</td>
                                             <td className='border border-primaryColor px-6 text-nowrap'>{user.gender}</td>
-                                            <td className='flex justify-center items-center gap-2  px-6 text-textColor border border-primaryColor'>
-                                                <SecondaryButton
-                                                    btn_name="Edit"
+                                            <td className='flex justify-center items-center gap-2  px-6 py-3 text-textColor border border-primaryColor'>
+                                                <OutlinedButton
+                                                    name="Edit"
                                                     onClick={() => { editUser(user) }}
+                                                    mdWidth="sm:w-20"
                                                 />
                                                 <PrimaryButton
                                                     btn_name="Delete"
-                                                    onClick={handelDeleteModal}
+                                                    onClick={() => { handelDeleteModal(index) }}
                                                 />
                                             </td>
                                         </tr>
@@ -141,7 +150,25 @@ const Listing = () => {
             {
                 showModal &&
                 <div className="w-full flex justify-center items-center">
-                    <Modal />
+                    <Modal>
+                        <div className="flex justify-end pr-5 pt-5">
+                            <button onClick={removeModal}><img src={images.cross} className="h-4 w-4" /></button>
+                        </div>
+                        <div className="text-lg font-medium text-primaryColor text-start pl-5">
+                            <h1>Are you sure you want to delete this record</h1>
+                        </div>
+                        <div className="flex gap-3 text-sm font-medium text-textColor justify-end pr-5 pt-6">
+                            <OutlinedButton
+                                name="DELETE"
+                                onClick={() => { deleteUser() }}
+                            />
+                            <PrimaryButton
+                                btn_name="CANCEL"
+                                onClick={() => removeModal()}
+                                smWidth="24"
+                            />
+                        </div>
+                    </Modal>
                 </div>
             }
         </Layout>
