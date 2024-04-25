@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Layout from "../../utils/Layout";
 import { useNavigate } from "react-router-dom";
-import { Button, Modal, OutlinedButton, PrimaryButton, SecondaryButton } from "../../components/Shared";
+import { Modal, OutlinedButton, PrimaryButton, SecondaryButton } from "../../components/Shared";
 import { getUser } from "../../utils/utils";
-import images from "../../assets/images";
+import images from '../../assets/images/images'
+
 
 const Listing = () => {
 
@@ -81,23 +82,6 @@ const Listing = () => {
     return (
         <Layout>
             <div className={`w-full ${showModal ? 'blur-[1px]' : 'blur-none'}`}>
-                <div className="flex float-left">
-                    <OutlinedButton
-                        name="Add Student"
-                        onClick={handelAddUser}
-                        mdWidth="sm:w-28"
-                    />
-                </div>
-                <div className="flex gap-5 float-right">
-                    <Button
-                        name="Log out"
-                        onClick={handelLogOut}
-                        smWidth="16"
-                    />
-                </div>
-                <div className='mt-20 text-center'>
-                    <h1 className='text-primaryColor text-xl sm:text-2xl font-bold pb-8'>Student Listing</h1>
-                </div>
                 <div className='flex flex-col relative overflow-x-auto'>
                     <table className="table-fixed border border-primaryColor" id="table">
                         <thead className='bg-primaryColor'>
