@@ -5,6 +5,8 @@ import AddUser from "../pages/AddUser";
 import Listing from "../pages/Listing";
 import SignUp from "../pages/Signup";
 import { isLoginUser } from "../utils/utils.js";
+import PageNotFound from "../pages/PageNotFound/index.js";
+import UserProfile from "../pages/UserProfile/index.js";
 
 const Route = () => {
 
@@ -43,6 +45,14 @@ const Route = () => {
         {
             path: '/update-student/:id',
             element: <ProtectedRoute><AddUser /></ProtectedRoute>
+        },
+        {
+            path: '/*',
+            element: <PageNotFound />
+        },
+        {
+            path: '/user-profile',
+            element: <ProtectedRoute><UserProfile /></ProtectedRoute>
         }
     ])
 

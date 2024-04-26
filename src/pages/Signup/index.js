@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { InputField, Button, OutlinedButton } from "../../components/Shared";
 import Layout from "../../utils/Layout";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
 
@@ -15,24 +15,6 @@ const SignUp = () => {
             return [];
         }
     }
-
-    const isLoginUser = () => {
-
-        const getUser = JSON.parse(localStorage.getItem("loginUser"));
-        if (getUser) {
-            const user = getUser.find(user => user.isLogin === true);
-            if (user) {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-        else {
-            return true;
-        }
-
-    }
     // state to set the users detail
     const [signUpUser, setSignUpUser] = useState(getUser());
     const [signUpData, setSignUpData] = useState({
@@ -43,8 +25,6 @@ const SignUp = () => {
         isLogin: false
     });
     const [existUser, setExistUser] = useState(false);
-    // check if user login than sign up page should not be accessed until the user logout
-    const [isLoggedIn, setisLoggedIn] = useState(isLoginUser());
 
     //validation errors
     const [error, setError] = useState({
@@ -59,6 +39,7 @@ const SignUp = () => {
 
     const handelChange = (event) => {
         const { name, value } = event.target;
+
         setSignUpData(
             {
                 ...signUpData,
@@ -96,7 +77,7 @@ const SignUp = () => {
             if (signUpUser.length > 0) {
                 if (newArray) {
                     setExistUser(true);
-                    setErrorMessage("user exists choose another username or password");
+                    setErrorMessage("user exists choose another email");
                 }
                 else {
                     const updateData = [...signUpUser, signUpData];
@@ -115,72 +96,64 @@ const SignUp = () => {
             }
         }
 
-        // set the input field empty after the values are submitted
-        setSignUpData({
-            username: "",
-            email: "",
-            password: ""
-        });
     }
 
     const handelAccount = () => {
         navigate("/");
     }
     return (
-        <Layout>
-            <div className="flex justify-center items-center h-lvh">
-                <div className="flex flex-col w-11/12 sm:w-auto justify-center items-center outline outline-1 outline-outlineColor m-5 p-10  sm:px-28 sm:py-16">
-                    {existUser && <span className="text-base font-medium text-errorColor">{errorMessage}</span>}
-                    <div>
-                        <h1 className="text-primaryColor text-2xl sm:text-3xl font-bold pb-8 text-nowrap">Signup</h1>
-                    </div>
-                    <div>
-                        <form className="flex flex-col">
-                            <InputField
-                                name="username"
-                                type="text"
-                                placeholder="Username"
-                                value={signUpData.username}
-                                onChange={handelChange}
-                                error={error.username}
 
-                            />
-                            <InputField
-                                name="email"
-                                type="email"
-                                placeholder="email"
-                                value={signUpData.email}
-                                onChange={handelChange}
-                                error={error.email}
-                            />
-                            <InputField
-                                name="password"
-                                type="password"
-                                placeholder="password"
-                                value={signUpData.password}
-                                onChange={handelChange}
-                                error={error.password}
-                            />
-                        </form>
-                    </div>
-                    <div className="mt-10 mb-3">
-                        <Button
-                            name="Register"
-                            onClick={handelSubmit}
-                            smWidth="56"
-                            mdWidth="sm:w-72"
+        <div className="flex justify-center items-center h-lvh">
+            <div className="flex flex-col w-11/12 sm:w-auto justify-center items-center outline outline-1 outline-outlineColor m-5 p-10  sm:px-28 sm:py-16">
+                {existUser && <span className="text-base text-center font-medium text-errorColor">{errorMessage}</span>}
+                <div>
+                    <h1 className="text-primaryColor text-xl sm:text-2xl md:text-3xl font-bold pb-8 text-nowrap">Signup</h1>
+                </div>
+                <div>
+                    <form className="flex flex-col">
+                        <InputField
+                            name="username"
+                            type="text"
+                            placeholder="Username"
+                            value={signUpData.username}
+                            onChange={handelChange}
+                            error={error.username}
+
                         />
-                    </div>
-                    <OutlinedButton
-                        name="Already Have Account"
-                        onClick={handelAccount}
+                        <InputField
+                            name="email"
+                            type="email"
+                            placeholder="email"
+                            value={signUpData.email}
+                            onChange={handelChange}
+                            error={error.email}
+                        />
+                        <InputField
+                            name="password"
+                            type="password"
+                            placeholder="password"
+                            value={signUpData.password}
+                            onChange={handelChange}
+                            error={error.password}
+                        />
+                    </form>
+                </div>
+                <div className="mt-10 mb-3">
+                    <Button
+                        name="Register"
+                        onClick={handelSubmit}
                         smWidth="56"
                         mdWidth="sm:w-72"
                     />
                 </div>
+                <OutlinedButton
+                    name="Already Have Account"
+                    onClick={handelAccount}
+                    smWidth="56"
+                    mdWidth="sm:w-72"
+                />
             </div>
-
-        </Layout>
+        </div>
     );
 }
 

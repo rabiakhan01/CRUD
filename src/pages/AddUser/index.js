@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, InputField, OutlinedButton } from '../../components/Shared';
 import Layout from '../../utils/Layout';
 import { useParams, useNavigate } from 'react-router-dom';
+import Navbar from '../../components/Shared/Navbar';
 
 const AddUser = () => {
 
@@ -181,45 +182,17 @@ const AddUser = () => {
 
     return (
         <Layout>
-            <div className='flex flex-col justify-center items-center h-lvh'>
+            <div className='flex flex-col justify-center items-center'>
                 <div className='w-full lg:w-1/2 '>
                     <div className='flex flex-col gap-3 outline outline-1 outline-outlineColor mt-5 justify-center items-center pb-5'>
                         {
                             buttonChanged ?
-                                <div className='w-full  flex justify-between  px-5 py-5'>
-                                    <div>
-                                        <OutlinedButton
-                                            name="Listing"
-                                            onClick={UserListing}
-                                        />
-                                    </div>
-                                    <div className='text-center'>
-                                        <h1 className='text-primaryColor text-2xl font-bold'>Update Student</h1>
-                                    </div>
-                                    <div>
-                                        <Button
-                                            name="Log out"
-                                            onClick={handelLogOut}
-                                        />
-                                    </div>
+                                <div className='w-full  flex justify-center items-center  px-5 py-5'>
+                                    <h1 className='text-primaryColor text-xl sm:text-2xl font-bold'>Update Student</h1>
                                 </div>
                                 :
-                                <div className='w-full flex justify-between px-5 py-5 border-b-2 border-outlineColor'>
-                                    <div>
-                                        <OutlinedButton
-                                            name="Listing"
-                                            onClick={UserListing}
-                                        />
-                                    </div>
-                                    <div className='text-center'>
-                                        <h1 className='text-primaryColor text-2xl font-bold'>Add Student</h1>
-                                    </div>
-                                    <div>
-                                        <Button
-                                            name="Log out"
-                                            onClick={handelLogOut}
-                                        />
-                                    </div>
+                                <div className='w-full flex justify-center items-center px-5 py-5'>
+                                    <h1 className='text-primaryColor text-xl sm:text-2xl font-bold'>Add New Student</h1>
                                 </div>
                         }
                         <div className='flex flex-col items-center'>
@@ -258,7 +231,7 @@ const AddUser = () => {
                                 error={error.address}
                             />
                         </div>
-                        <div className='flex flex-col gap-1 w-72'>
+                        <div className='flex text-sm sm:text-base flex-col gap-1 w-56 sm:w-72'>
                             <div>
                                 <label>Gender</label>
                             </div>
@@ -291,7 +264,7 @@ const AddUser = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-1 w-72'>
+                        <div className='flex text-sm sm:text-base flex-col gap-1 w-56 sm:w-72'>
                             <div>
                                 <label>
                                     Favourit Languages
@@ -342,8 +315,8 @@ const AddUser = () => {
                                     <Button
                                         name="Update Student"
                                         onClick={updateUser}
-                                        smWidth="24"
-                                        mdWidth="24"
+                                        smWidth="28"
+                                        mdWidth="sm:w-36"
                                     />
                                     :
                                     <Button

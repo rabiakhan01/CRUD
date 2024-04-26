@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { Button, InputField, OutlinedButton } from "../../components/Shared";
-import Layout from "../../utils/Layout";
-import { Navigate, useNavigate } from "react-router-dom";
-import images from "../../assets/images";
-import { isLoginUser } from "../../utils/utils";
+import images from '../../assets/images/images';
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
 
     //hook used for navigation from one page to another
     const navigate = useNavigate();
-    const [isLoggedIn, setisLoggedIn] = useState(isLoginUser());
+
     //handel state of input fields of login screen
     const [loginUser, setLoginUser] = useState({
         email: '',
@@ -85,10 +84,6 @@ const Login = () => {
             if (loginUser.email !== "" && loginUser.password !== "") {
                 setValidationError(true);
                 setValidationMessage("Account not exists please first create an account");
-                setLoginUser({
-                    email: "",
-                    password: ""
-                })
             }
             else {
                 if (loginUser.email === '') {
@@ -112,66 +107,64 @@ const Login = () => {
         setPasswordIcon(false)
     }
     return (
-        <Layout>
-            <div className="flex justify-center items-center h-lvh">
-                <div className="flex flex-col w-4/5 sm:w-auto justify-center items-center outline outline-1 outline-outlineColor m-5 p-10 sm:px-20 sm:py-14">
-                    <div>
-                        <h1 className="text-primaryColor text-2xl md:text-3xl font-bold pb-8">Login</h1>
-                    </div>
-                    {validationError && <span className="text-errorColor">{validationMessage}</span>}
-                    <div>
-                        <form className="relative flex flex-col">
-                            <InputField
-                                name="email"
-                                type="text"
-                                placeholder="email"
-                                value={loginUser.email}
-                                onChange={handelChange}
-                                error={error.email}
-                            />
-
-                            <div className="relative flex flex-col">
-                                <InputField
-                                    name="password"
-                                    type={passwordIcon ? `text` : `password`}
-                                    placeholder="password"
-                                    value={loginUser.password}
-                                    onChange={handelChange}
-                                    error={error.password}
-                                />
-                                {
-                                    passwordIcon
-                                        ?
-                                        <div className="absolute left-48 top-8 sm:left-64 sm:top-9">
-                                            <button type="button" className="" onClick={hidePassword}><img src={images.eye} alt="" className="h-4 sm:h-5 w-4 sm:w-5" /></button>
-                                        </div>
-                                        :
-                                        <div className="absolute left-48 top-8 sm:left-64 sm:top-9">
-                                            <button type="button" className="" onClick={showPassword}><img src={images.eyeSlash} alt="" className="w-4 sm:w-5 h-5 sm:h-5" /></button>
-                                        </div>
-                                }
-
-                            </div>
-                        </form>
-                    </div>
-                    <div className="mt-10 mb-3">
-                        <Button
-                            name="Sign In"
-                            onClick={handelLogin}
-                            smWidth="56"
-                            mdWidth="sm:w-72"
+        <div className="flex justify-center items-center h-lvh">
+            <div className="flex flex-col w-4/5 sm:w-auto justify-center items-center outline outline-1 outline-outlineColor m-5 p-10 sm:px-20 sm:py-14">
+                <div>
+                    <h1 className="text-primaryColor text-xl sm:text-2xl md:text-3xl font-bold pb-8">Login</h1>
+                </div>
+                {validationError && <span className="text-errorColor text-center font-medium">{validationMessage}</span>}
+                <div>
+                    <form className="relative flex flex-col">
+                        <InputField
+                            name="email"
+                            type="text"
+                            placeholder="email"
+                            value={loginUser.email}
+                            onChange={handelChange}
+                            error={error.email}
                         />
-                    </div>
-                    <OutlinedButton
-                        name="Create New Account"
-                        onClick={createAccount}
+
+                        <div className="relative flex flex-col">
+                            <InputField
+                                name="password"
+                                type={passwordIcon ? `text` : `password`}
+                                placeholder="password"
+                                value={loginUser.password}
+                                onChange={handelChange}
+                                error={error.password}
+                            />
+                            {
+                                passwordIcon
+                                    ?
+                                    <div className="absolute left-48 top-8 sm:left-64 sm:top-9">
+                                        <button type="button" className="" onClick={hidePassword}><img src={images.eye} alt="" className="h-4 sm:h-5 w-4 sm:w-5" /></button>
+                                    </div>
+                                    :
+                                    <div className="absolute left-48 top-8 sm:left-64 sm:top-9">
+                                        <button type="button" className="" onClick={showPassword}><img src={images.eyeSlash} alt="" className="w-4 sm:w-5 h-5 sm:h-5" /></button>
+                                    </div>
+                            }
+
+                        </div>
+                    </form>
+                </div>
+                <div className="mt-10 mb-3">
+                    <Button
+                        name="Sign In"
+                        onClick={handelLogin}
                         smWidth="56"
                         mdWidth="sm:w-72"
                     />
-
                 </div>
+                <OutlinedButton
+                    name="Create New Account"
+                    onClick={createAccount}
+                    smWidth="56"
+                    mdWidth="sm:w-72"
+                />
+
             </div>
-        </Layout>
+        </div>
     );
 }
 
