@@ -101,10 +101,13 @@ const Listing = () => {
                                                     name="Edit"
                                                     onClick={() => { editUser(user) }}
                                                     mdWidth="sm:w-20"
+                                                    smWidth="16"
                                                 />
                                                 <PrimaryButton
                                                     btn_name="Delete"
                                                     onClick={() => { handelDeleteModal(index) }}
+                                                    mdWidth="sm:w-20"
+                                                    smWidth="16"
                                                 />
                                             </td>
                                         </tr>
@@ -125,7 +128,8 @@ const Listing = () => {
                 showModal &&
                 <div className="w-full flex justify-center items-center">
                     <Modal>
-                        <div className="flex justify-end pr-5 pt-5">
+                        <div className="flex justify-between pr-5 pt-5">
+                            <p className="text-lg pl-5 text-errorColor font-medium">Delete Record</p>
                             <button onClick={removeModal}><img src={images.cross} className="h-4 w-4" /></button>
                         </div>
                         <div className="text-lg font-medium text-primaryColor text-start pl-5">
@@ -133,12 +137,14 @@ const Listing = () => {
                         </div>
                         <div className="flex gap-3 text-sm font-medium text-textColor justify-end pr-5 pt-6">
                             <OutlinedButton
-                                name="DELETE"
-                                onClick={() => { deleteUser() }}
+                                name="CANCEL"
+                                onClick={() => removeModal()}
+                                smWidth="24"
+
                             />
                             <PrimaryButton
-                                btn_name="CANCEL"
-                                onClick={() => removeModal()}
+                                btn_name="DELETE"
+                                onClick={() => { deleteUser() }}
                                 smWidth="24"
                             />
                         </div>

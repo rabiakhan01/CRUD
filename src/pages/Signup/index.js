@@ -105,9 +105,9 @@ const SignUp = () => {
 
         <div className="flex justify-center items-center h-lvh">
             <div className="flex flex-col w-11/12 sm:w-auto justify-center items-center outline outline-1 outline-outlineColor m-5 p-10  sm:px-28 sm:py-16">
-                {existUser && <span className="text-base font-medium text-errorColor">{errorMessage}</span>}
+                {existUser && <span className="text-base text-center font-medium text-errorColor">{errorMessage}</span>}
                 <div>
-                    <h1 className="text-primaryColor text-2xl sm:text-3xl font-bold pb-8 text-nowrap">Signup</h1>
+                    <h1 className="text-primaryColor text-xl sm:text-2xl md:text-3xl font-bold pb-8 text-nowrap">Signup</h1>
                 </div>
                 <div>
                     <form className="flex flex-col">

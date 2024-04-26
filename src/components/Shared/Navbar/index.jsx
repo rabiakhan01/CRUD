@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import images from "../../../assets/images/images";
 import ProfileModal from "../ProfileModal";
 
@@ -36,11 +36,11 @@ const Navbar = () => {
         <React.Fragment>
             <nav className="flex w-full mb-10 bg-primaryColor py-[18px]">
                 <div className="hidden md:flex relative w-full justify-start md:justify-center md:items-center">
-                    <div className="flex justify-center items-center text-md sm:text-xl xl:text-2xl font-medium gap-10">
-                        <Link to="/add-new-student" className={`text-textColor hover:underline`}>Add Student</Link>
+                    <div className="flex justify-center items-center text-md sm:text-lg xl:text-xl font-medium gap-10">
+                        <NavLink to="/add-new-student" className={`text-textColor hover:underline`}>Add Student</NavLink>
                         <Link to="/student-listing" className={`text-textColor hover:underline`}>Student Listing</Link>
                     </div>
-                    <div className="absolute right-4 -top-1">
+                    <div className="absolute right-14 -top-1">
                         <div className="">
                             <button onClick={handelProfile}>
                                 <img src={images.profileImage} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full" />

@@ -110,9 +110,9 @@ const Login = () => {
         <div className="flex justify-center items-center h-lvh">
             <div className="flex flex-col w-4/5 sm:w-auto justify-center items-center outline outline-1 outline-outlineColor m-5 p-10 sm:px-20 sm:py-14">
                 <div>
-                    <h1 className="text-primaryColor text-2xl md:text-3xl font-bold pb-8">Login</h1>
+                    <h1 className="text-primaryColor text-xl sm:text-2xl md:text-3xl font-bold pb-8">Login</h1>
                 </div>
-                {validationError && <span className="text-errorColor">{validationMessage}</span>}
+                {validationError && <span className="text-errorColor text-center font-medium">{validationMessage}</span>}
                 <div>
                     <form className="relative flex flex-col">
                         <InputField

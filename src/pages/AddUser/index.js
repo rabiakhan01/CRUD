@@ -231,7 +231,7 @@ const AddUser = () => {
                                 error={error.address}
                             />
                         </div>
-                        <div className='flex flex-col gap-1 w-56 sm:w-72'>
+                        <div className='flex text-sm sm:text-base flex-col gap-1 w-56 sm:w-72'>
                             <div>
                                 <label>Gender</label>
                             </div>
@@ -264,7 +264,7 @@ const AddUser = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex flex-col gap-1 w-56 sm:w-72'>
+                        <div className='flex text-sm sm:text-base flex-col gap-1 w-56 sm:w-72'>
                             <div>
                                 <label>
                                     Favourit Languages

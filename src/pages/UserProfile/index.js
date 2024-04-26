@@ -54,10 +54,10 @@ const UserProfile = () => {
     return (
         <Layout>
             <div className="w-full flex flex-col justify-center items-center">
-                <h1 className="text-primaryColor text-xl sm:text-3xl font-bold mb-10">User Profile</h1>
+                <h1 className="text-primaryColor text-xl sm:text-2xl font-bold mb-10">User Profile</h1>
                 <div className="flex flex-col w-11/12 sm:w-4/5 md:w-1/2 h-auto justify-center items-center outline outline-1 outline-outlineColor p-5">
                     <img src={images.profileImage} alt="profile_img" className="rounded-full w-16 h-16 sm:w-24 sm:h-24 lg:w-36 lg:h-36 mb-5" />
-                    <h1 className="text-lg sm:text-xl md:text-2xl text-primaryColor font-bold">Welcome {user.username}</h1>
+                    <h1 className="text-md sm:text-xl md:text-2xl text-primaryColor font-bold">Welcome {user.username}</h1>
                     <div className="mt-10">
                         <ProfileSection
                             heading="Username"
