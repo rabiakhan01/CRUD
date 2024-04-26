@@ -10,9 +10,13 @@ const images = {
     password: require('../icons/message.png'),
     email: require('../icons/padlock.png'),
     close: require('../icons/cross.png'),
+
     //images
     profileImage: require('./profile_img.png'),
     hamburger: require('../icons/hamburger.png'),
+
+    //logo
+    logo: require('./logo.png'),
 }
 
 export default images;

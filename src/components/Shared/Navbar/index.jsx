@@ -34,24 +34,29 @@ const Navbar = () => {
     return (
 
         <React.Fragment>
-            <nav className="flex w-full mb-10 bg-primaryColor py-[18px]">
-                <div className="hidden md:flex relative w-full justify-start md:justify-center md:items-center">
-                    <div className="flex justify-center items-center text-md sm:text-lg xl:text-xl font-medium gap-10">
+            <nav className="flex flex-row-reverse justify-between md:flex-row w-full mb-10 bg-primaryColor py-[18px]">
+                <div className="hidden md:flex relative text-xl text-outlineColor justify-center items-center">
+                    <div className="flex justify-center items-center">
+                        <h1 className="absolute left-10">StudentSphere</h1>
+                    </div>
+                </div>
+                <div className="hidden md:flex gap-3 relative w-full justify-start md:justify-end md:items-center md:mr-[3.53rem]">
+                    <div className="flex justify-center items-center text-md sm:text-lg  font-medium gap-5">
                         <NavLink to="/add-new-student" className={`text-textColor hover:underline`}>Add Student</NavLink>
                         <Link to="/student-listing" className={`text-textColor hover:underline`}>Student Listing</Link>
                     </div>
-                    <div className="absolute right-14 -top-1">
-                        <div className="">
-                            <button onClick={handelProfile}>
-                                <img src={images.profileImage} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full" />
-                            </button>
-                        </div>
+
+                    <div className="flex justify-center items-center pl-16">
+                        <button onClick={handelProfile}>
+                            <img src={images.profileImage} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full" />
+                        </button>
+
                         {
                             showModal ? <ProfileModal /> : ''
                         }
                     </div>
                 </div>
-                <div className="flex flex-col relative md:hidden">
+                <div className="flex flex-col relative md:hidden mr-5">
                     <div>
                         <button onClick={handelMenu}>
 
@@ -59,14 +64,14 @@ const Navbar = () => {
                                 !mobileMenu ?
                                     <img src={images.hamburger} className="w-4 h-4 ml-5 sm:ml-10" alt="" />
                                     :
-                                    <img src={images.close} className="w-4 h-4 ml-5 sm:ml-10" alt="" />
+                                    <img src={images.close} className="w-3 h-3 ml-5 sm:ml-10" alt="" />
                             }
 
                         </button>
                     </div>
                     {
                         mobileMenu &&
-                        <div className="flex flex-col gap-3 absolute text-base font-medium w-screen bg-white text-primaryColor border border-y-1 border-b-1 border-t-0 top-[2.4rem] pl-5 sm:pl-10 pb-5 z-20">
+                        <div className="flex flex-col gap-3 absolute text-base font-medium w-screen bg-white text-primaryColor border border-y-1 border-b-1 border-t-0 top-[2.8rem] -right-5 pl-5 sm:pl-10 pb-5 z-20">
                             <Link to="/add-new-student" className={`hover:underline pt-5`} onClick={handelMenu}>Add Student</Link>
                             <Link to="/student-listing" className="hover:underline" onClick={handelMenu}>Student Listing</Link>
                             <Link to="/user-profile" className="hover:underline" onClick={handelMenu}>Your Profile</Link>
@@ -74,6 +79,10 @@ const Navbar = () => {
                         </div>
                     }
                 </div>
+                <div className="flex md:hidden pl-6 text-md text-outlineColor justify-center items-center">
+                    <h1>StudentSphere</h1>
+                </div>
+
             </nav>
         </React.Fragment>
     );
