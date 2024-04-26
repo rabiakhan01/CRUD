@@ -5,7 +5,6 @@ import { ProfileSection, Button } from "../../components/Shared";
 import { useNavigate } from "react-router-dom";
 const UserProfile = () => {
 
-    const navigate = useNavigate();
     const getUser = JSON.parse(localStorage.getItem("loginUser"));
     const user = getUser.find(user => user.isLogin);
 
@@ -19,20 +18,6 @@ const UserProfile = () => {
     });
 
     const [userData, setUserData] = useState(getUser);
-
-
-    //handel logout functionality on button clicked 
-    const handelLogOut = () => {
-        const getUser = JSON.parse(localStorage.getItem("loginUser"));
-        getUser.map((user) => {
-            if (user.isLogin) {
-                user.isLogin = false;
-                const updateUser = JSON.stringify(getUser);
-                localStorage.setItem("loginUser", updateUser);
-                navigate("/")
-            }
-        })
-    }
 
     const handelChange = (event) => {
 
@@ -70,9 +55,9 @@ const UserProfile = () => {
         <Layout>
             <div className="w-full flex flex-col justify-center items-center">
                 <h1 className="text-primaryColor text-xl sm:text-3xl font-bold mb-10">User Profile</h1>
-                <div className="flex flex-col w-1/2 h-auto justify-center items-center outline outline-1 outline-outlineColor p-5">
-                    <img src={images.profileImage} alt="profile_img" className="rounded-full w-36 h-36 mb-5" />
-                    <h1 className="text-2xl text-primaryColor font-bold">Welcome {user.username}</h1>
+                <div className="flex flex-col w-11/12 sm:w-4/5 md:w-1/2 h-auto justify-center items-center outline outline-1 outline-outlineColor p-5">
+                    <img src={images.profileImage} alt="profile_img" className="rounded-full w-16 h-16 sm:w-24 sm:h-24 lg:w-36 lg:h-36 mb-5" />
+                    <h1 className="text-lg sm:text-xl md:text-2xl text-primaryColor font-bold">Welcome {user.username}</h1>
                     <div className="mt-10">
                         <ProfileSection
                             heading="Username"
@@ -83,7 +68,7 @@ const UserProfile = () => {
                                 name="username"
                                 value={editUser.username}
                                 disabled={true}
-                                className="text-xl font-medium"
+                                className="text-base md:text-xl font-medium"
                             />
                         </ProfileSection>
                         <ProfileSection
@@ -95,7 +80,7 @@ const UserProfile = () => {
                                 name="email"
                                 value={editUser.email}
                                 disabled={true}
-                                className="text-xl font-medium"
+                                className="text-base md:text-xl font-medium"
                             />
                         </ProfileSection>
                         <ProfileSection
@@ -108,7 +93,7 @@ const UserProfile = () => {
                                 name="password"
                                 value={editUser.password}
                                 disabled={disable ? false : true}
-                                className={`${disable ? 'outline outline-1 outline-outlineColor' : ''} text-xl font-medium `}
+                                className={`${disable ? 'outline outline-1 outline-outlineColor' : ''} text-base md:text-xl font-medium `}
                                 onChange={handelChange}
                             />
                         </ProfileSection>

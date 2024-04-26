@@ -33,18 +33,7 @@ const Listing = () => {
         navigate(`/update-student/${user.id}`);
     }
 
-    //handel logout functionality on button clicked 
-    const handelLogOut = () => {
-        const getUser = JSON.parse(localStorage.getItem("loginUser"));
-        getUser.map((user) => {
-            if (user.isLogin) {
-                user.isLogin = false;
-                const updateUser = JSON.stringify(getUser);
-                localStorage.setItem("loginUser", updateUser);
-                navigate("/")
-            }
-        })
-    }
+
 
     //handel adding of new user
     const handelAddUser = () => {
@@ -82,6 +71,7 @@ const Listing = () => {
     return (
         <Layout>
             <div className={`w-full ${showModal ? 'blur-[1px]' : 'blur-none'}`}>
+                <h1 className="md:hidden text-center text-lg sm:text-xl md:text-2xl mb-10 text-primaryColor font-bold">Student Listing</h1>
                 <div className='flex flex-col relative overflow-x-auto'>
                     <table className="table-fixed border border-primaryColor" id="table">
                         <thead className='bg-primaryColor'>
@@ -123,7 +113,7 @@ const Listing = () => {
                                     :
                                     <tr>
                                         <td colSpan={7} className="text-center py-8">
-                                            <span className="text-xl sm:text-2xl text-primaryColor font-bold">No Record</span>
+                                            <span className="text-md sm:text-xl md:text-2xl text-primaryColor font-bold">No Record</span>
                                         </td>
                                     </tr>
                             }

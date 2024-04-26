@@ -9,9 +9,10 @@ const images = {
     user: require('../icons/user.png'),
     password: require('../icons/message.png'),
     email: require('../icons/padlock.png'),
-
+    close: require('../icons/cross.png'),
     //images
-    profileImage: require('./profile_img.png')
+    profileImage: require('./profile_img.png'),
+    hamburger: require('../icons/hamburger.png'),
 }
 
 export default images;
