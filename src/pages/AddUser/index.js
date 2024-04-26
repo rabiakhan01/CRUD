@@ -315,8 +315,8 @@ const AddUser = () => {
                                     <Button
                                         name="Update Student"
                                         onClick={updateUser}
-                                        smWidth="24"
-                                        mdWidth="24"
+                                        smWidth="28"
+                                        mdWidth="sm:w-36"
                                     />
                                     :
                                     <Button

@@ -40,13 +40,13 @@ const Navbar = () => {
                         <h1 className="absolute left-10">StudentSphere</h1>
                     </div>
                 </div>
-                <div className="hidden md:flex gap-3 relative w-full justify-start md:justify-end md:items-center md:mr-[3.53rem]">
+                <div className="hidden md:flex gap-5 relative w-full justify-start md:justify-end md:items-center md:mr-[3.53rem]">
                     <div className="flex justify-center items-center text-md sm:text-lg  font-medium gap-5">
                         <NavLink to="/add-new-student" className={`text-textColor hover:underline`}>Add Student</NavLink>
-                        <Link to="/student-listing" className={`text-textColor hover:underline`}>Student Listing</Link>
+                        <Link to="/student-listing" className={`text-textColor hover:underline`}>All Students</Link>
                     </div>
 
-                    <div className="flex justify-center items-center pl-16">
+                    <div className="flex justify-center items-center">
                         <button onClick={handelProfile}>
                             <img src={images.profileImage} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full" />
                         </button>

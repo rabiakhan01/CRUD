@@ -129,11 +129,11 @@ const Listing = () => {
                 <div className="w-full flex justify-center items-center">
                     <Modal>
                         <div className="flex justify-between pr-5 pt-5">
-                            <p className="text-lg pl-5 text-errorColor font-medium">Delete Record</p>
+                            <p className="text-lg pl-3 text-errorColor font-medium">Delete The Record</p>
                             <button onClick={removeModal}><img src={images.cross} className="h-4 w-4" /></button>
                         </div>
-                        <div className="text-lg font-medium text-primaryColor text-start pl-5">
-                            <h1>Are you sure you want to delete this record</h1>
+                        <div className="text-lg font-medium text-primaryColor text-center">
+                            <h1>Are you sure you want to delete this record?</h1>
                         </div>
                         <div className="flex gap-3 text-sm font-medium text-textColor justify-end pr-5 pt-6">
                             <OutlinedButton

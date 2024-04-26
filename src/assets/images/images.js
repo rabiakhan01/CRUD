@@ -16,7 +16,7 @@ const images = {
     hamburger: require('../icons/hamburger.png'),
 
     //logo
-    logo: require('./logo.png'),
+    logo: require('./logo.png')
 }
 
 export default images;
